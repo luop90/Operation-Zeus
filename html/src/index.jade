@@ -4,6 +4,13 @@ html(lang="en" ng-app="podcast")
     title Podcast Manager
     link(rel="stylesheet" href="../../assets/build/css/master.min.css" media="screen" title="no title" charset="utf-8")
   body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': $root.darkTheme }")
+    .navbar-fixed
+      nav
+        .nav-wrapper
+          a(href="#/").brand-logo.center Logo
+          ul.left
+            li.waves-effect.waves-light
+              a(href="#/") Podcasts
     main
       .container(ng-view)
       
