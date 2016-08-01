@@ -1,3 +1,10 @@
 .row
   .col.s12
-    h1 Hello World
+    .card(ng-repeat="podcast in podcasts")
+      .card-image
+        img(src="{{ ::podcast.imageURL }}")
+        span(ng-bind="podcast.name").cart-title
+      .card-content
+        p(ng-bind="podcast.description")
+      .card-action
+        a(href="#/podcast/{{ ::podcast.id }}").waves-effect View Podcasts
