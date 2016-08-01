@@ -2,6 +2,7 @@ section(ng-controller="HomePageCtrl")
   .row
     .col.s12
       podcast-panel(ng-repeat="podcast in podcasts")
+      preloader(ng-show="loadingPodcasts")
       p(ng-show="podcasts.length < 1").flow-text You currently have no podcasts! Why don't you add one...?
       button(type="button" ng-click="openPodcastModal()" style="display:block;").btn-floating.btn-large.waves-effect.waves-light
         i.material-icons.large add
@@ -16,5 +17,7 @@ section(ng-controller="HomePageCtrl")
           .col.s5.offset-s7
             a(href="javascript:void(0);").modal-action.modal-close.waves-effect.waves-light.btn-flat Cancel
             button(type="submit").waves-effect.waves-green.btn-flat.good Add
-            
+        preloader-small(ng-show="loadingRSSFeed")
+        span(ng-model="podcastInfo.errorMessage" ng-show="podcastInfo.hasError").danger
+
   button(type="button" data-target="addPodcastModal").hide.modal-trigger
