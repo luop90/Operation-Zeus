@@ -1,6 +1,7 @@
 section(ng-controller="SettingPageCtrl")
   .row
     .col.s12
+      h3.center About
       table
         thead
           tr
@@ -30,3 +31,12 @@ section(ng-controller="SettingPageCtrl")
             td
               p.range-field
                 input(type="range" min="0" max="100")
+          tr
+            td Analytics
+            td
+              p
+                input(type="radio" name="analytics" checked).with-gap#analyticsOn
+                label(for="analyticsOn") On
+              p
+                input(type="radio" name="analytics").with-gap#analyticsOff
+                label(for="analyticsOff") Off
