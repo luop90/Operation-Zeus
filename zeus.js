@@ -154,6 +154,7 @@ Zeus.saveSettings = function(data, callback) {
 Zeus.savePodcast = function(podcast) {
   for (var i = 0; i < podcast.podcasts.length; i++) {
     podcast.podcasts[i].pubDateParsed = moment(podcast.podcasts[i].pubDate).format('MMMM DD, YYYY');
+    podcast.podcasts[i].id = i;
 
     if (podcast.podcasts[i]['itunes:duration']['#'].includes(':')) {
       podcast.podcasts[i].podcastLengthParsed = podcast.podcasts[i]['itunes:duration']['#'];

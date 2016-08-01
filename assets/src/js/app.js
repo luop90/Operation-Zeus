@@ -27,4 +27,6 @@ angular
   .module('zeus')
   .directive('podcastPanel', PodcastPanelDirective)
   .directive('preloader', PreloaderDirective)
-  .directive('preloaderSmall', PreloaderSmallDirective);
+  .directive('preloaderSmall', PreloaderSmallDirective)
+  .directive('preloaderSmallBlue', PreloaderSmallBlueDirective)
+  .directive('podcastEpisode', PodcastEpisodeDirective);

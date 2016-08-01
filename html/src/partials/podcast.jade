@@ -1,4 +1,4 @@
-section(ng-controller="PodcastPageCtrl")
+section(ng-controller="PodcastPageCtrl" ng-init="showUnplayedOnly = true;")
   .row
     .col.s12
       .card.horizontal
@@ -14,36 +14,11 @@ section(ng-controller="PodcastPageCtrl")
     .col.s12
       ul.tabs
         li.tab.col.s6.waves-effect.waves-blue
-          a(href="#Unplayed").active Unplayed
+          a(href="#Unplayed" ng-click="showUnplayedOnly = true;").active Unplayed
         li.tab.col.s6.waves-effect.waves-blue
-          a(href="#Feed") Feed
+          a(href="#Feed" ng-click="showUnplayedOnly = false;") Feed
     .col.s12#Unplayed
       ul.collection
         li(ng-repeat="episode in podcast.podcasts").collection-item.avatar
-          img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
-          span(ng-bind="episode.title").title
-          p
-            span(ng-bind="episode.pubDateParsed")
-            | &nbsp;&bull;&nbsp;
-            span(ng-bind="episode.podcastLengthParsed")
-          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/download" ng-hide="episode.isDownloaded").download-link
-            i.material-icons file_download
-          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/delete" ng-show="episode.isDownloaded").delete-link
-            i.material-icons delete_forever
-          a(href="#").secondary-content
-            i.material-icons markunread            
+          podcast-episode(ng-hide="showUnplayedOnly && episode.watched")
     .col.s12#Feed
-      ul.collection
-        li(ng-repeat="episode in podcast.podcasts").collection-item.avatar
-          img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
-          span(ng-bind="episode.title").title
-          p
-            span(ng-bind="episode.pubDateParsed") loading...
-            | &nbsp;&bull;&nbsp;
-            span(ng-bind="episode.podcastLengthParsed")
-          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/download" ng-hide="episode.isDownloaded").download-link
-            i.material-icons file_download
-          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/delete" ng-show="episode.isDownloaded").delete-link
-            i.material-icons delete_forever
-          a(href="#" ng-class="{ 'already-watched': episode.watched }").secondary-content
-            i.material-icons markunread

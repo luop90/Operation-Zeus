@@ -1,0 +1,14 @@
+img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
+span(ng-bind="episode.title").title
+p
+  span(ng-bind="episode.pubDateParsed")
+  | &nbsp;&bull;&nbsp;
+  span(ng-bind="episode.podcastLengthParsed")
+a(href="javascript:void(0);" ng-click="downloadEpisode(episode.id)" ng-hide="episode.isDownloaded || episode.downloading").download-link
+  i.material-icons file_download
+a(href="javascript:void(0);" ng-click="deleteEpisode(episode.id)" ng-show="episode.isDownloaded").delete-link
+  i.material-icons delete_forever
+a(href="#").secondary-content
+  i.material-icons markunread
+.progress(ng-show="episode.downloading")
+  div(ng-style="{ 'width': episode.downloadPercent }").determinate

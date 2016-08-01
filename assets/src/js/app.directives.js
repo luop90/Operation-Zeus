@@ -18,3 +18,17 @@ function PreloaderSmallDirective() {
     templateUrl: 'partials/preloader-small.html'
   }
 }
+
+function PreloaderSmallBlueDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/preloader-small-blue.html'
+  }
+}
+
+function PodcastEpisodeDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/podcast-episode.html'
+  }
+}
