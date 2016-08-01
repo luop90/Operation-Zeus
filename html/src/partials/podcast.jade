@@ -22,11 +22,9 @@ section(ng-controller="PodcastPageCtrl")
           img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
           span(ng-bind="episode.title").title
           p
-            span(ng-bind="episode.description1") Test Test Test Test Test
-            br
             span(ng-bind="episode.pubDateParsed") loading...
             | &bull;
-            span(ng-bind="episode['itunes:duration']['#']")
+            span(ng-bind="episode.podcastLength")
           a(href="#").secondary-content
             i.material-icons grade
     .col.s12#Feed
@@ -35,10 +33,8 @@ section(ng-controller="PodcastPageCtrl")
           img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
           span(ng-bind="episode.title").title
           p
-            span(ng-bind="episode.description1") Test Test Test Test Test
-            br
             span(ng-bind="episode.pubDateParsed") loading...
             | &bull;
-            span(ng-bind="episode['itunes:duration']['#']")
+            span(ng-bind="episode.podcastLength")
           a(href="#").secondary-content
             i.material-icons grade
