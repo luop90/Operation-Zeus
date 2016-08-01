@@ -29,7 +29,7 @@ function createWindow(filename) {
     height: 600
   });
 
-  g_currentWindow.loadURL(`file://${__dirname}/html/${filename}`);
+  g_currentWindow.loadURL(`file://${__dirname}/html/build/${filename}`);
   g_currentWindow.on('closed', () => {
     g_currentWindow = null;
   });
