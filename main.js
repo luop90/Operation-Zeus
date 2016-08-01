@@ -24,10 +24,11 @@ function createWindow(filename) {
   }
 
   g_currentWindow = new BrowserWindow({
-    frame: false,
-    titalBarStyle: 'hidden',
+    frame: true,
+    titleBarStyle: 'hidden',
     width: 800,
-    height: 600
+    height: 600,
+    title: 'Operation Zeus'
   });
 
   g_currentWindow.loadURL(`file://${__dirname}/html/build/${filename}`);
