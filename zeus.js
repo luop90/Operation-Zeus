@@ -90,6 +90,10 @@ Zeus.loadSavedPodcasts = function(callback) {
 
 };
 
+/**
+ * Reads our userdata settings
+ * @param callback {FUNCTION}
+ */
 Zeus.loadSettings = function(callback) {
   fs.readFile(`userdata/settings.json`, (err, data) => {
     if (err) {
@@ -104,6 +108,11 @@ Zeus.loadSettings = function(callback) {
   });
 };
 
+/**
+ * Saves settings to a file
+ * @param data {OBJECT}
+ * @param callback {FUNCTION}
+ */
 Zeus.saveSettings = function(data, callback) {
   var data = JSON.stringify(data);
 
