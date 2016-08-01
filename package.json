@@ -1,5 +1,5 @@
 {
-  "name": "podcast-manager",
+  "name": "operation-zeus",
   "version": "0.0.1",
   "main": "main.js",
   "license": "GPLv3",
@@ -14,5 +14,10 @@
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "less-plugin-clean-css": "^1.5.1"
+  },
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "moment": "^2.14.1",
+    "request": "^2.74.0"
   }
 }
