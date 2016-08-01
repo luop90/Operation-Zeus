@@ -1,7 +1,7 @@
 html(lang="en" ng-app="zeus")
   head
     meta(charset="utf-8")
-    title Podcast Manager
+    title Operation Zeus
     link(rel="stylesheet" href="../../assets/build/css/master.min.css" media="screen" title="no title" charset="utf-8")
   body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': $root.darkTheme }")
     .navbar-fixed
@@ -13,8 +13,6 @@ html(lang="en" ng-app="zeus")
               a(href="#/") Podcasts
     main
       .container(ng-view)
-      
-    button(type="button" class="hide button-collapse")
     
     script.
       if (typeof module === 'object') {window.module = module; module = undefined;}
@@ -22,6 +20,7 @@ html(lang="en" ng-app="zeus")
     script.
       if (window.module) module = window.module;
     script(src="../../assets/build/js/materialize.min.js" charset="utf-8")
-    script(src='../../assets/build/js/angular.min.js' charset='utf-8')
-    script(src='../../assets/build/js/angular-route.min.js' charset='utf-8')
-    script(src='../../assets/build/js/podcast-manager.min.js' charset='utf-8')
+    script(src="../../assets/build/js/angular.min.js" charset="utf-8")
+    script(src="../../assets/build/js/angular-route.min.js" charset="utf-8")
+    script(src="../../assets/build/js/operation-zeus.min.js" charset="utf-8")
+    script(src="../../zeus.js" charset="utf-8")
