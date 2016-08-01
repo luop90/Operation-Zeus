@@ -6,6 +6,9 @@ var zeus = angular.module('zeus', [
     $routeProvider
       .when('/', {
         templateUrl: 'partials/home.html'
+      })
+      .when('/podcast/:id', {
+        templateUrl: 'partials/podcast.html'
       });
 
     $locationProvider.html5Mode(false);
