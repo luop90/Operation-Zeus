@@ -1,13 +1,6 @@
-.row
+.row(ng-controller="HomePageCtrl")
   .col.s12
-    .card(ng-repeat="podcast in podcasts")
-      .card-image
-        img(src="{{ ::podcast.imageURL }}")
-        span(ng-bind="podcast.name").cart-title
-      .card-content
-        p(ng-bind="podcast.description")
-      .card-action
-        a(href="#/podcast/{{ ::podcast.id }}").waves-effect View Podcasts
+    podcast-panel(ng-repeat="podcast in podcasts")
     p(ng-show="!podcasts").
       You currently have no podcasts! Why don't you add one...?
     button(type="button" ng-click="addNewPodcast()").btn-floating.btn-large.waves-effect.waves-light
