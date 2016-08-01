@@ -16,7 +16,6 @@
     "less-plugin-clean-css": "^1.5.1"
   },
   "dependencies": {
-    "cheerio": "^0.20.0",
     "feedparser": "^1.1.4",
     "moment": "^2.14.1",
     "request": "^2.74.0"
