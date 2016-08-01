@@ -1,8 +1,20 @@
-.row(ng-controller="HomePageCtrl")
-  .col.s12
-    podcast-panel(ng-repeat="podcast in podcasts")
-    p(ng-show="!podcasts").
-      You currently have no podcasts! Why don't you add one...?
-    button(type="button" ng-click="addNewPodcast()").btn-floating.btn-large.waves-effect.waves-light
-      i.material-icons.large add
-    
+section(ng-controller="HomePageCtrl")
+  .row
+    .col.s12
+      podcast-panel(ng-repeat="podcast in podcasts")
+      p(ng-show="podcasts.length < 1") You currently have no podcasts! Why don't you add one...?
+      button(type="button" ng-click="openPodcastModal()" style="display:block;").btn-floating.btn-large.waves-effect.waves-light
+        i.material-icons.large add
+      
+  .modal#addPodcastModal
+    .modal-content
+      form(ng-model="podcastInfo" ng-submit="addNewPodcast(podcastInfo)").col.s12
+        .row
+          .col.s12.input-field
+            input(type="text" ng-required="true" ng-model="podcastInfo.url")#podcastURL
+            label(for="podcastURL") RSS URL
+          .col.s5.offset-s7
+            a(href="javascript:void(0);").modal-action.modal-close.waves-effect.waves-light.btn-flat Cancel
+            button(type="submit").waves-effect.waves-green.btn-flat.good Add
+            
+  button(type="button" data-target="addPodcastModal").hide.modal-trigger
