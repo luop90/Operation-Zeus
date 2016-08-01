@@ -67,36 +67,4 @@ function addPodcast(url, callback) {
   feedparser.on('end', () => {
     callback(null, podcast);
   });
-
-  // request(url, (error, response, body) => {
-  //   if (error || response.statusCode != 200) {
-  //     throw error;
-  //   }
-  //
-  //   var $ = cheerio.load(body, {
-  //     xmlMode: true
-  //   });
-  //   var hasMorePodcasts = true;
-  //   var podcast = {};
-  //   var tempPodcast = {};
-  //   var i = 0;
-  //
-  //   podcast.name = $('channel > title').text();
-  //   podcast.externalLink = $('channel > link').text();
-  //   podcast.author = $('channel > itunes:author').text();
-  //   podcast.description = $('channel > description').text();
-  //   podcast.imageURL = $('channel > itunes:image').attr('href');
-  //
-  //   podcast.podcasts = [];
-  //
-  //   while (hasMorePodcasts) {
-  //     if (!$('item').eq(i)) {
-  //       hasMorePodcasts = false;
-  //       break;
-  //     }
-  //
-  //     tempPodcast = {};
-  //     tempPodcast.name = $('item').eq(i).
-  //   }
-  // });
 }
