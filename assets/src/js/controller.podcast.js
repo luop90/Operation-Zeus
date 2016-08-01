@@ -4,4 +4,5 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     $location.url('/');
   }
 
+  $('ul.tabs').tabs();
 }]);
