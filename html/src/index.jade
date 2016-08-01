@@ -7,6 +7,10 @@ html(lang="en" ng-app="zeus")
     main
       include includes/header
       .container(ng-view)
+    article(ng-hide="$root.fullyLoaded")#splash-screen
+      h1 Loading...
+      h4 Some random quote
+      include partials/preloader
     
     script.
       if (typeof module === 'object') {window.module = module; module = undefined;}
