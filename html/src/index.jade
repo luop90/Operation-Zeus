@@ -4,22 +4,8 @@ html(lang="en" ng-app="zeus")
     title Operation Zeus
     link(rel="stylesheet" href="../../assets/build/css/master.min.css" media="screen" title="no title" charset="utf-8")
   body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': $root.darkTheme }")
-    .navbar-fixed
-      nav
-        .nav-wrapper
-          a(href="#/").brand-logo.center Operation Zeus
-          ul.left
-            li.waves-effect.waves-light
-              a(href="#/")
-                i.material-icons settings_input_antenna
-          ul.right
-            li.waves-effect.waves-light
-              a(href="#/about")
-                i.material-icons info_outline
-            li.waves-effect.waves-light
-              a(href="#/settings")
-                i.material-icons settings
     main
+      include includes/header
       .container(ng-view)
     
     script.

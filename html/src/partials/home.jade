@@ -2,7 +2,7 @@ section(ng-controller="HomePageCtrl")
   .row
     .col.s12
       podcast-panel(ng-repeat="podcast in podcasts")
-      p(ng-show="podcasts.length < 1") You currently have no podcasts! Why don't you add one...?
+      p(ng-show="podcasts.length < 1").flow-text You currently have no podcasts! Why don't you add one...?
       button(type="button" ng-click="openPodcastModal()" style="display:block;").btn-floating.btn-large.waves-effect.waves-light
         i.material-icons.large add
       
