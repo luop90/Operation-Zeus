@@ -95,17 +95,23 @@ Zeus.loadSavedPodcasts = function(callback) {
  * @param callback {FUNCTION}
  */
 Zeus.loadSettings = function(callback) {
-  fs.readFile(`userdata/settings.json`, (err, data) => {
-    if (err) {
-      Zeus.log('error', `Failed to read file, ${err}`);
-      return callback({});
-    }
+  var data = {};
+  if (fs.existsSync('userdata/settings.json')) {
+    data = JSON.parse(fs.readFileSync('userdata/settings.json'));
+  }
 
-    Zeus.log('file', 'Read settings file');
-    data = JSON.parse(data);
-    console.log(data);
-    callback(data);
-  });
+  callback(data);
+  // fs.readFile('userdata/settings.json', (err, data) => {
+  //   if (err) {
+  //     Zeus.log('error', `Failed to read file, ${err}`);
+  //     return callback({});
+  //   }
+  //
+  //   Zeus.log('file', 'Read settings file');
+  //   data = JSON.parse(data);
+  //   console.log(data);
+  //   callback(data);
+  // });
 };
 
 /**
