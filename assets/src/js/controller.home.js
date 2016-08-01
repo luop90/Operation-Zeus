@@ -9,7 +9,15 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
   };
 
   $scope.addNewPodcast = function (podcastInfo) {
+    $scope.podcastInfo.hasError = false;
     $scope.loadingRSSFeed = true;
+
+    if (!podcastInfo.url.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/)) {
+      $scope.podcastInfo.errorMessage = 'Invalid URL';
+      $scope.podcastInfo.hasError = true;
+      $scope.loadingRSSFeed = false;
+      return;
+    }
 
     addPodcast(podcastInfo.url, function (err, podcast) {
       if (err || !podcast) {
