@@ -29,11 +29,11 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
         return;
       }
 
-      $rootScope.podcasts.push(podcast);
-      var i = $rootScope.podcasts.indexOf(podcast);
-      $rootScope.podcasts[i].id = i;
+      // $rootScope.podcasts.push(podcast);
+      // var i = $rootScope.podcasts.indexOf(podcast);
+      // $rootScope.podcasts[i].id = i;
       $('.modal#addPodcastModal').closeModal();
-      console.log(podcast);
+      // console.log(podcast);
 
       $scope.podcastInfo.url = '';
       $scope.loadingRSSFeed = false;

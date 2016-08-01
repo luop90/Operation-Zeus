@@ -133,9 +133,11 @@ Zeus.loadSettings = function(callback) {
  * @param callback {FUNCTION}
  */
 Zeus.saveSettings = function(data, callback) {
-  var data = JSON.stringify(data);
 
-  fs.writeFile(`userdata/settings.json`, data, (err) => {
+  // fs.writeFileSync(`userdata/settings.json`, JSON.stringify(data));
+  // Zeus.log('file', 'Saved user settings');
+
+  fs.writeFile(`userdata/settings.json`, JSON.stringify(data), (err) => {
     if (err) {
       throw err;
     }
@@ -167,6 +169,9 @@ Zeus.removePodcast = function(podcast) {
  * Writes the podcasts file to JSON
  */
 Zeus.updatePodcastFile = function () {
+  // fs.writeFileSync(`userdata/podcasts.json`, JSON.stringify(Zeus.podcasts));
+  // Zeus.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
+
   fs.writeFile(`userdata/podcasts.json`, JSON.stringify(Zeus.podcasts), (err) => {
     if (err) {
       throw error;

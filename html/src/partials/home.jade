@@ -1,7 +1,7 @@
 section(ng-controller="HomePageCtrl")
   .row
     .col.s12
-      podcast-panel(ng-repeat="podcast in podcasts")
+      podcast-panel(ng-repeat="podcast in podcasts track by $index")
       preloader(ng-show="loadingPodcasts")
       p(ng-show="podcasts.length < 1").flow-text You currently have no podcasts! Why don't you add one...?
     .col.s12
