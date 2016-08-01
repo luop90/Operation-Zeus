@@ -13,3 +13,7 @@ var zeus = angular.module('zeus', [
 
     $locationProvider.html5Mode(false);
   }]);
+
+angular
+  .module('zeus')
+  .directive('podcastPanel', PodcastPanelDirective);

@@ -1,3 +1,3 @@
-zeus.controller('PlayerCtrl', function ($scope) {
+zeus.controller('PlayerCtrl', ['$scope', function ($scope) {
 
-});
+}]);

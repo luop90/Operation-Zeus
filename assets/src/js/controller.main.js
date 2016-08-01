@@ -1,6 +1,3 @@
-zeus.controller('MainCtrl', function ($scope, $rootScope) {
-  $scope.addNewPodcast = function () {
-    
-  };
+zeus.controller('MainCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
   // A scope!
-});
+}]);
