@@ -22,4 +22,6 @@ var zeus = angular.module('zeus', [
 
 angular
   .module('zeus')
-  .directive('podcastPanel', PodcastPanelDirective);
+  .directive('podcastPanel', PodcastPanelDirective)
+  .directive('preloader', PreloaderDirective)
+  .directive('preloaderSmall', PreloaderSmallDirective);

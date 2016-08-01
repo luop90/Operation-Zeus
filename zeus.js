@@ -33,21 +33,21 @@ function addPodcast(url, callback) {
   req.setHeader('accept', 'text/html,application/xhtml+xml');
 
   req.on('error', (error) => {
-    throw error;
+    callback(error, null);
   });
 
   req.on('response', function (res) {
     var stream = this;
 
     if (res.statusCode != 200) {
-      return this.emit('error', new Error(`Bad status code ${res.statusCode}`));
+      return callback(`Bad status code ${res.statusCode}`, null);
     }
 
     stream.pipe(feedparser);
   });
 
   feedparser.on('error', (error) => {
-    throw error;
+    callback(error, null);
   });
 
   feedparser.on('readable', function () {
