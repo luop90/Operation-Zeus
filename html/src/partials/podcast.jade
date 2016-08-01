@@ -22,9 +22,9 @@ section(ng-controller="PodcastPageCtrl")
           img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}").circle
           span(ng-bind="episode.title").title
           p
-            span(ng-bind="episode.pubDateParsed") loading...
-            | &bull;
-            span(ng-bind="episode.podcastLength")
+            span(ng-bind="episode.pubDateParsed")
+            | &nbsp;&bull;&nbsp;
+            span(ng-bind="episode.podcastLengthParsed")
           a(href="#").secondary-content
             i.material-icons grade
     .col.s12#Feed
@@ -34,7 +34,7 @@ section(ng-controller="PodcastPageCtrl")
           span(ng-bind="episode.title").title
           p
             span(ng-bind="episode.pubDateParsed") loading...
-            | &bull;
-            span(ng-bind="episode.podcastLength")
+            | &nbsp;&bull;&nbsp;
+            span(ng-bind="episode.podcastLengthParsed")
           a(href="#").secondary-content
             i.material-icons grade

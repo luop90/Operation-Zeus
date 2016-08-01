@@ -153,12 +153,15 @@ Zeus.saveSettings = function(data, callback) {
  */
 Zeus.savePodcast = function(podcast) {
   for (var i = 0; i < podcast.podcasts.length; i++) {
+    podcast.podcasts[i].pubDateParsed = moment(podcast.podcasts[i].pubDate).format('MMMM DD, YYYY');
+
     if (podcast.podcasts[i]['itunes:duration']['#'].includes(':')) {
-      podcast.podcasts[i].podcastLength = podcast.podcasts[i]['itunes:duration']['#'];
+      podcast.podcasts[i].podcastLengthParsed = podcast.podcasts[i]['itunes:duration']['#'];
       continue;
     }
 
     podcast.podcasts[i].podcastLength = Zeus.formatSecondsToHoursMinutesSeconds(podcast.podcasts[i]['itunes:duration']['#']);
+    podcast.podcasts[i].podcastLengthParsed = Zeus.formatSecondsToWords(podcast.podcasts[i]['itunes:duration']['#']);
   }
 
   Zeus.podcasts.push(podcast);
@@ -189,6 +192,12 @@ Zeus.updatePodcastFile = function () {
     Zeus.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
   });
 };
+
+Zeus.formatSecondsToWords = function (seconds) {
+  var d = moment.duration(parseInt(seconds), 'seconds');
+  var response = `${d.hours()} hr ${d.minutes()} min`;
+  return response;
+}
 
 Zeus.formatSecondsToHoursMinutesSeconds = function (seconds) {
   var d = moment.duration(parseInt(seconds), 'seconds');
