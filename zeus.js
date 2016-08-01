@@ -81,7 +81,9 @@ Zeus.addPodcast = function(url, callback) {
   feedparser.on('error', (err) => {
     callback(err, null);
   });
+
   feedparser.on('end', () => {
+    Zeus.savePodcast(podcast);
     callback(null, podcast);
   });
 };
@@ -122,7 +124,7 @@ Zeus.saveSettings = function(data, callback) {
   });
 };
 
-Zeus.savePodcast = function(data) {
+Zeus.savePodcast = function(podcast) {
 
 };
 

@@ -1,0 +1,13 @@
+section(ng-controller="PodcastPageCtrl")
+  .row
+    .col.s12
+      .card.horizontal
+        .card-image
+          img(src="{{ podcast.meta['itunes:image']['@'].href }}")
+        .card-stacked
+          .card-content
+            h3(ng-bind="podcast.meta.title")
+            h5(ng-bind="podcast.meta.author")
+            p(ng-bind="podcast.meta.description")
+          .card-action
+      
