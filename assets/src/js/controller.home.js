@@ -1,6 +1,9 @@
 zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
   $scope.podcasts = $rootScope.podcasts;
   $('button.modal-trigger').leanModal();
+  $('.tooltipped').tooltip({
+    delay: 50
+  });
 
   $scope.openPodcastModal = function () {
     Materialize.updateTextFields();
@@ -37,7 +40,16 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
 
       $timeout(function () {
         $scope.loadingPodcasts = false;
+        $('.tooltipped').tooltip({
+          delay: 50
+        });
       }, 1000);
     });
   };
+
+  $timeout(function () {
+    $('.tooltipped').tooltip({
+      delay: 50
+    });
+  }, 500);
 }]);

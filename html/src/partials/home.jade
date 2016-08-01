@@ -5,7 +5,7 @@ section(ng-controller="HomePageCtrl")
       preloader(ng-show="loadingPodcasts")
       p(ng-show="podcasts.length < 1").flow-text You currently have no podcasts! Why don't you add one...?
     .col.s12
-      button(type="button" ng-click="openPodcastModal()" style="display:block;").btn-floating.btn-large.waves-effect.waves-light.right
+      button(type="button" ng-click="openPodcastModal()" style="display:block;" data-position="bottom" data-tooltip="Add podcast").tooltipped.btn-floating.btn-large.waves-effect.waves-light.right
         i.material-icons.large add
       
   .modal#addPodcastModal

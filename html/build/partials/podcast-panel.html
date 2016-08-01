@@ -1,1 +1,1 @@
-<a href="#/podcast/{{ ::podcast.id }}"><div class="podcast-panel hover"><img src="{{ ::podcast.meta['itunes:image']['@'].href }}"/></div></a>
+<a href="#/podcast/{{ ::podcast.id }}"><div class="podcast-panel hover"><img src="{{ ::podcast.meta['itunes:image']['@'].href }}" data-position="bottom" data-tooltip="{{ ::podcast.meta.title }}" class="tooltipped"/></div></a>
