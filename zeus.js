@@ -88,8 +88,29 @@ Zeus.addPodcast = function(url, callback) {
   });
 };
 
+/**
+ * Reads our podcasts from the JSON file
+ * @param callback {FUNCTION}
+ */
 Zeus.loadSavedPodcasts = function(callback) {
+  var data = [];
+  if (fs.existsSync('userdata/podcasts.json')) {
+    data = JSON.parse(fs.readFileSync('userdata/podcasts.json'));
+  }
 
+  Zeus.podcasts = data;
+  return callback(data);
+//   fs.readFile('userdata/podcasts.json', function (err, data) {
+//     if (err) {
+//       Zeus.log('error', 'No podcast file found');
+//       Zeus.podcasts = [];
+//       return callback([]);
+//     }
+//
+//     data = JSON.parse(data);
+//     Zeus.podcasts = data;
+//     return callback(data);
+//   });
 };
 
 /**
@@ -124,10 +145,33 @@ Zeus.saveSettings = function(data, callback) {
   });
 };
 
+/**
+ * Saves a podcast to our array / file
+ * @param podcast {PODCAST}
+ */
 Zeus.savePodcast = function(podcast) {
-
+  Zeus.podcasts.push(podcast);
+  podcast.id = Zeus.podcasts.indexOf(podcast);
+  Zeus.updatePodcastFile();
 };
 
-Zeus.removePodcast = function(data) {
+/**
+ * Removes a podcast from our array / file
+ * @param podcast {PODCAST}
+ */
+Zeus.removePodcast = function(podcast) {
+  Zeus.podcasts.splice(podcast.id, 1);
+};
 
+/**
+ * Writes the podcasts file to JSON
+ */
+Zeus.updatePodcastFile = function () {
+  fs.writeFile(`userdata/podcasts.json`, JSON.stringify(Zeus.podcasts), (err) => {
+    if (err) {
+      throw error;
+    }
+
+    Zeus.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
+  });
 };

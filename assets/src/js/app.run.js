@@ -8,6 +8,11 @@ function runBlock($window, $rootScope, $location) {
 
   Zeus.loadSettings(function (data) {
     $rootScope.settings = data;
-    $rootScope.fullyLoaded = true;
+
+    Zeus.loadSavedPodcasts(function (data) {
+      console.log(data);
+      $rootScope.podcasts = data;
+      $rootScope.fullyLoaded = true;
+    });
   });
 }
