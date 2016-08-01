@@ -3,14 +3,14 @@ section(ng-controller="PodcastPageCtrl")
     .col.s12
       .card.horizontal
         .card-image
-          img(src="{{ podcast.meta['itunes:image']['@'].href }}")
+          img(src="{{ ::podcast.meta['itunes:image']['@'].href }}")
         .card-stacked
           .card-content
             h3(ng-bind="podcast.meta.title")
             h5(ng-bind="podcast.meta.author")
             p(ng-bind="podcast.meta.description")
           .card-action
-            a(href="{{ podcast.meta.link }}" target="_blank") Visit Website
+            a(href="{{ ::podcast.meta.link }}" target="_blank") Visit Website
     .col.s12
       ul.tabs
         li.tab.col.s6.waves-effect.waves-blue
@@ -26,8 +26,12 @@ section(ng-controller="PodcastPageCtrl")
             span(ng-bind="episode.pubDateParsed")
             | &nbsp;&bull;&nbsp;
             span(ng-bind="episode.podcastLengthParsed")
+          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/download" ng-hide="episode.isDownloaded").download-link
+            i.material-icons file_download
+          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/delete" ng-show="episode.isDownloaded").delete-link
+            i.material-icons delete_forever
           a(href="#").secondary-content
-            i.material-icons grade
+            i.material-icons markunread            
     .col.s12#Feed
       ul.collection
         li(ng-repeat="episode in podcast.podcasts").collection-item.avatar
@@ -37,5 +41,9 @@ section(ng-controller="PodcastPageCtrl")
             span(ng-bind="episode.pubDateParsed") loading...
             | &nbsp;&bull;&nbsp;
             span(ng-bind="episode.podcastLengthParsed")
-          a(href="#").secondary-content
-            i.material-icons grade
+          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/download" ng-hide="episode.isDownloaded").download-link
+            i.material-icons file_download
+          a(href="#/podcast/{{ ::podcast.id }}/{{ ::episode.id}}/delete" ng-show="episode.isDownloaded").delete-link
+            i.material-icons delete_forever
+          a(href="#" ng-class="{ 'already-watched': episode.watched }").secondary-content
+            i.material-icons markunread
