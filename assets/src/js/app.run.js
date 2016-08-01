@@ -1,5 +1,5 @@
 angular
-  .module('podcast')
+  .module('zeus')
   .run(runBlock);
 
 function runBlock($window, $rootScope, $location) {

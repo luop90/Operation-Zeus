@@ -1,3 +1,3 @@
-podcast.controller('PlayerCtrl', function ($scope) {
-  
+zeus.controller('PlayerCtrl', function ($scope) {
+
 });

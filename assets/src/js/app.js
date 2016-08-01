@@ -1,4 +1,4 @@
-var podcast = angular.module('podcast', [
+var zeus = angular.module('zeus', [
   'ngRoute'
 ])
 .config(['$routeProvider', '$locationProvider',
