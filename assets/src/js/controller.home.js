@@ -1,7 +1,6 @@
 zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+  $scope.podcasts = $rootScope.podcasts;
   $('button.modal-trigger').leanModal();
-
-  $scope.podcasts = [];
 
   $scope.openPodcastModal = function () {
     Materialize.updateTextFields();
@@ -27,7 +26,7 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
         return;
       }
 
-      $scope.podcasts.push(podcast);
+      $rootScope.podcasts.push(podcast);
       $('.modal#addPodcastModal').closeModal();
 
       $scope.podcastInfo.url = '';

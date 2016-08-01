@@ -4,4 +4,5 @@ angular
 
 function runBlock($window, $rootScope, $location) {
   $rootScope.darkTheme = true;
+  $rootScope.podcasts = [];
 }
