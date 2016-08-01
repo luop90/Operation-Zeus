@@ -1,0 +1,32 @@
+section(ng-controller="SettingPageCtrl")
+  .row
+    .col.s12
+      table
+        thead
+          tr
+            th Name
+            th Value
+        tbody
+          tr
+            td Theme
+            td
+              p
+                input(type="radio" name="theme").with-gap#lightTheme
+                label(for="lightTheme") Light
+              p
+                input(type="radio" name="theme" checked).with-gap#darkTheme
+                label(for="darkTheme") Dark
+          tr
+            td Animations
+            td
+              p
+                input(type="radio" name="animations" checked).with-gap#animationsOn
+                label(for="animationsOn") On
+              p
+                input(type="radio" name="animations").with-gap#animationsOff
+                label(for="animationsOff") Off
+          tr
+            td Volume
+            td
+              p.range-field
+                input(type="range" min="0" max="100")
