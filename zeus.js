@@ -5,24 +5,41 @@ var FeedParser = require('feedparser');
 
 var Electron = require('electron');
 var Main = Electron.remote.require('./main.js');
+var Zeus = {};
 
-var podcasts = [];
+Zeus.podcasts = [];
 
-function log(tag, message) {
+/**
+ * Logs with a timestamp
+ * @param tag {STRING}
+ * @param message {STRING}
+ */
+Zeus.log = function(tag, message) {
   var timestamp = moment.utc().format('YYYY-mm-dd HH:mm:ss');
   var tag = '';
   switch (tag) {
     case 'request':
       tag = '{REQUEST}'
       break;
+    case 'file':
+      tag = '{FILE}';
+      break;
+    case 'error':
+      tag = '{ERROR}';
+      break;
     default:
-
+      tag = '';
   }
 
   console.log(`${timestamp} ${tag} ${message}`);
-}
+};
 
-function addPodcast(url, callback) {
+/**
+ * Fetches the XML from an RSS feed
+ * @param url {STRING}
+ * @param callback {FUNCTION}
+ */
+Zeus.addPodcast = function(url, callback) {
   var req = request(url);
   var feedparser = new FeedParser();
   var podcast = {};
@@ -67,4 +84,43 @@ function addPodcast(url, callback) {
   feedparser.on('end', () => {
     callback(null, podcast);
   });
-}
+};
+
+Zeus.loadSavedPodcasts = function(callback) {
+
+};
+
+Zeus.loadSettings = function(callback) {
+  fs.readFile(`userdata/settings.json`, (err, data) => {
+    if (err) {
+      Zeus.log('error', `Failed to read file, ${err}`);
+      return callback({});
+    }
+
+    Zeus.log('file', 'Read settings file');
+    data = JSON.parse(data);
+    console.log(data);
+    callback(data);
+  });
+};
+
+Zeus.saveSettings = function(data, callback) {
+  var data = JSON.stringify(data);
+
+  fs.writeFile(`userdata/settings.json`, data, (err) => {
+    if (err) {
+      throw err;
+    }
+
+    Zeus.log('file', 'Saved user settings');
+    callback ? callback(true) : false;
+  });
+};
+
+Zeus.savePodcast = function(data) {
+
+};
+
+Zeus.removePodcast = function(data) {
+
+};

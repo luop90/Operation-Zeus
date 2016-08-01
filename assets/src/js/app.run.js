@@ -5,5 +5,9 @@ angular
 function runBlock($window, $rootScope, $location) {
   $rootScope.darkTheme = true;
   $rootScope.podcasts = [];
-  $rootScope.fullyLoaded = true;
+
+  Zeus.loadSettings(function (data) {
+    $rootScope.settings = data;
+    $rootScope.fullyLoaded = true;
+  });
 }

@@ -30,7 +30,7 @@ section(ng-controller="SettingPageCtrl")
             td Volume
             td
               p.range-field
-                input(type="range" min="0" max="100")
+                input(type="range" min="0" max="100")#volumeRange
           tr
             td Analytics
             td
@@ -40,3 +40,5 @@ section(ng-controller="SettingPageCtrl")
               p
                 input(type="radio" name="analytics").with-gap#analyticsOff
                 label(for="analyticsOff") Off
+                
+      button(ng-click="saveSettings();").btn-flat.good.right.waves-effect.waves-green Save  

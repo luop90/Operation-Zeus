@@ -3,7 +3,7 @@ html(lang="en" ng-app="zeus")
     meta(charset="utf-8")
     title Operation Zeus
     link(rel="stylesheet" href="../../assets/build/css/master.min.css" media="screen" title="no title" charset="utf-8")
-  body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': $root.darkTheme }")
+  body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': !$root.settings.lightTheme }")
     main
       include includes/header
       .container(ng-view)

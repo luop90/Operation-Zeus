@@ -18,7 +18,7 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
       return;
     }
 
-    addPodcast(podcastInfo.url, function (err, podcast) {
+    Zeus.addPodcast(podcastInfo.url, function (err, podcast) {
       if (err || !podcast) {
         $scope.podcastInfo.errorMessage = 'Error: ' + String(err);
         $scope.podcastInfo.hasError = true;
