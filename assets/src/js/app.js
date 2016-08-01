@@ -12,6 +12,9 @@ var zeus = angular.module('zeus', [
       })
       .when('/settings', {
         templateUrl: 'partials/settings.html'
+      })
+      .when('/about', {
+        templateUrl: 'partials/about.html'
       });
 
     $locationProvider.html5Mode(false);
