@@ -8,3 +8,8 @@
         p(ng-bind="podcast.description")
       .card-action
         a(href="#/podcast/{{ ::podcast.id }}").waves-effect View Podcasts
+    p(ng-show="!podcasts").
+      You currently have no podcasts! Why don't you add one...?
+    button(type="button" ng-click="addNewPodcast()").btn-floating.btn-large.waves-effect.waves-light
+      i.material-icons.large add
+    
