@@ -1,48 +1,15 @@
 const request = require('request');
 const fs = require('fs');
-const moment = require('moment');
 const FeedParser = require('feedparser');
-const crypto = require('crypto');
+const moment = require('moment');
 const Electron = require('electron');
 
+
 var Main = Electron.remote.require('./main.js');
+var api = require('./api.js');
 var Zeus = {};
 
 Zeus.podcasts = [];
-
-/**
- * Logs with a timestamp
- * @param tag {STRING}
- * @param message {STRING}
- */
-Zeus.log = function(tag, message) {
-  var timestamp = moment.utc().format('YYYY-mm-dd HH:mm:ss');
-  var tag = '';
-  switch (tag) {
-    case 'request':
-      tag = '{REQUEST}'
-      break;
-    case 'file':
-      tag = '{FILE}';
-      break;
-    case 'error':
-      tag = '{ERROR}';
-      break;
-    default:
-      tag = '';
-  }
-
-  console.log(`${timestamp} ${tag} ${message}`);
-};
-
-/**
- * Creates an MD5 hash for a given input
- * @param input {STRING}
- */
-Zeus.md5 = function (input) {
-  var hash = crypto.createHash('md5').update(input).digest('hex');
-  return hash;
-};
 
 /**
  * Fetches the XML from an RSS feed
@@ -112,7 +79,7 @@ Zeus.loadSavedPodcasts = function(callback) {
   return callback(data);
 //   fs.readFile('userdata/podcasts.json', function (err, data) {
 //     if (err) {
-//       Zeus.log('error', 'No podcast file found');
+//       api.log('error', 'No podcast file found');
 //       Zeus.podcasts = [];
 //       return callback([]);
 //     }
@@ -130,7 +97,7 @@ Zeus.loadSavedPodcasts = function(callback) {
 Zeus.loadSettings = function(callback) {
   var data = {};
   if (fs.existsSync('userdata/settings.json')) {
-    Zeus.log('file', 'Read settings file');
+    api.log('file', 'Read settings file');
     data = JSON.parse(fs.readFileSync('userdata/settings.json'));
   }
 
@@ -145,14 +112,14 @@ Zeus.loadSettings = function(callback) {
 Zeus.saveSettings = function(data, callback) {
 
   // fs.writeFileSync(`userdata/settings.json`, JSON.stringify(data));
-  // Zeus.log('file', 'Saved user settings');
+  // api.log('file', 'Saved user settings');
 
   fs.writeFile(`userdata/settings.json`, JSON.stringify(data), (err) => {
     if (err) {
       throw err;
     }
 
-    Zeus.log('file', 'Saved user settings');
+    api.log('file', 'Saved user settings');
     callback ? callback(true) : false;
   });
 };
@@ -171,8 +138,8 @@ Zeus.savePodcast = function(podcast) {
       continue;
     }
 
-    podcast.podcasts[i].podcastLength = Zeus.formatSecondsToHoursMinutesSeconds(podcast.podcasts[i]['itunes:duration']['#']);
-    podcast.podcasts[i].podcastLengthParsed = Zeus.formatSecondsToWords(podcast.podcasts[i]['itunes:duration']['#']);
+    podcast.podcasts[i].podcastLength = api.formatSecondsToHoursMinutesSeconds(podcast.podcasts[i]['itunes:duration']['#']);
+    podcast.podcasts[i].podcastLengthParsed = api.formatSecondsToWords(podcast.podcasts[i]['itunes:duration']['#']);
   }
 
   Zeus.podcasts.push(podcast);
@@ -193,14 +160,14 @@ Zeus.removePodcast = function(podcast) {
  */
 Zeus.updatePodcastFile = function () {
   // fs.writeFileSync(`userdata/podcasts.json`, JSON.stringify(Zeus.podcasts));
-  // Zeus.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
+  // api.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
 
   fs.writeFile(`userdata/podcasts.json`, JSON.stringify(Zeus.podcasts), (err) => {
     if (err) {
       throw error;
     }
 
-    Zeus.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
+    api.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
   });
 };
 
@@ -210,7 +177,7 @@ Zeus.updatePodcastFile = function () {
  */
 Zeus.downloadPodcast = function (podcast, callback) {
   var url = podcast['rss:enclosure']['@'].url;
-  var file = fs.createWriteStream(`userdata/podcasts/${Zeus.md5(podcast.guid)}.mp3`);
+  var file = fs.createWriteStream(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`);
 
   var req = request(url);
   // Sometimes we'll get a 400 error without a user-agent
@@ -238,14 +205,19 @@ Zeus.downloadPodcast = function (podcast, callback) {
   });
 };
 
-Zeus.formatSecondsToWords = function (seconds) {
-  var d = moment.duration(parseInt(seconds), 'seconds');
-  var response = `${d.hours()} hr ${d.minutes()} min`;
-  return response;
-};
+/**
+ * Deletes the .mp3 from the client
+ * @param podcast {PODCAST}
+ */
+Zeus.deletePodcast = function (podcast, callback) {
+  fs.unlinkSync(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`);
 
-Zeus.formatSecondsToHoursMinutesSeconds = function (seconds) {
-  var d = moment.duration(parseInt(seconds), 'seconds');
-  var response = `${d.hours()}:${d.minutes()}:${d.seconds()}`;
-  return response;
+  callback(true);
+  // fs.unlink(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`, function (err) {
+  //   if (err) {
+  //     throw error;
+  //   }
+  //
+  //   callback(success);
+  // });
 };
