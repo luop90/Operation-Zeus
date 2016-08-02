@@ -1,4 +1,3 @@
 a(href="#/podcast/{{ ::podcast.id }}")
   .podcast-panel.hover
-    img(src="../../userdata/cached/{{ ::podcast.id }}" ng-if="$root.settings.cacheImages" data-position="bottom" data-tooltip="{{ ::podcast.meta.title }}").tooltipped
-    img(src="{{ ::podcast.meta['itunes:image']['@'].href }}" ng-if="!$root.settings.cacheImages" data-position="bottom" data-tooltip="{{ ::podcast.meta.title }}").tooltipped
+    img(src="{{ ::podcast.imageURL }}" data-position="bottom" data-tooltip="{{ ::podcast.meta.title }}").tooltipped

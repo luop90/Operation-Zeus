@@ -3,7 +3,7 @@ section(ng-controller="PodcastPageCtrl" ng-init="showUnplayedOnly = true;")
     .col.s12
       .card.horizontal
         .card-image
-          img(src="{{ ::podcast.meta['itunes:image']['@'].href }}")
+          img(src="{{ ::podcast.imageURL }}")
         .card-stacked
           .card-content
             h3(ng-bind="podcast.meta.title")
