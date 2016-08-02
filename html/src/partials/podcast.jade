@@ -20,5 +20,6 @@ section(ng-controller="PodcastPageCtrl" ng-init="showUnplayedOnly = true;")
     .col.s12#Unplayed
       ul.collection
         li(ng-repeat="episode in podcast.podcasts").collection-item.avatar
-          podcast-episode(ng-hide="showUnplayedOnly && episode.watched")
+          a(href="#/play/{{ podcast.id }}/{{ episode.id }}")
+            podcast-episode(ng-hide="showUnplayedOnly && episode.watched")
     .col.s12#Feed
