@@ -11,12 +11,12 @@ section(ng-controller="PlayerPageCtrl")
           span(data-bind="episode.description" style="max-width: 500px").left
   .row
     .col.s1
-      span(ng-bind="playback.timePassed")
+      span(ng-bind="sound.currentTime | trackTime")
     .col.s10.no-select
       .progress
-        .determinate(ng-style="{ 'width': playback.percentPlayedOutput }")
+        .determinate(ng-style="{ 'width': (sound.progress * 100) + '%' }")
     .col.s1
-      span(ng-bind="playback.timeLeft")
+      span(ng-bind="sound.remaining | trackTime")
   .row.center.no-select
     .col.s2.offset-s1
       span(ng-click="playback.lastEpisode()" data-position="top" data-tooltip="Back to previous episode").hover.tooltipped
