@@ -3,8 +3,13 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
   $scope.showUnplayedOnly = true;
   if (!$scope.podcast) {
     $location.url('/');
+    return;
   }
 
+  for (var i = 0; i < $scope.podcast.podcasts.length; i++) {
+    $scope.podcast.podcasts[i].downloading = false;
+  }
+  
   $scope.downloadEpisode = function (id) {
     console.log(id);
     $scope.podcast.podcasts[id].downloading = true;
