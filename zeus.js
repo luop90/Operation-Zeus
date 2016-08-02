@@ -6,7 +6,7 @@ const Electron = require('electron');
 
 
 var Main = Electron.remote.require('./main.js');
-var api = require('./api.js');
+var api = Electron.remote.require('./api.js');
 var Zeus = {};
 
 Zeus.podcasts = [];
@@ -73,6 +73,14 @@ Zeus.loadSavedPodcasts = function(callback) {
   var data = [];
   if (fs.existsSync('userdata/podcasts.json')) {
     data = JSON.parse(fs.readFileSync('userdata/podcasts.json'));
+  }
+
+  for (var podcast = 0; podcast < data.length; podcast++) {
+    for (var episode = 0; episode < data[podcast].podcasts.length; episode++) {
+      data[podcast].podcasts[episode].hash = api.md5(data[podcast].podcasts[episode].guid);
+      data[podcast].podcasts[episode].id = episode;
+      data[podcast].podcasts[episode].isDownloaded = fs.existsSync(`userdata/podcasts/${data[podcast].podcasts[episode].hash}.mp3`);
+    }
   }
 
   Zeus.podcasts = data;
@@ -177,7 +185,7 @@ Zeus.updatePodcastFile = function () {
  */
 Zeus.downloadPodcast = function (podcast, callback) {
   var url = podcast['rss:enclosure']['@'].url;
-  var file = fs.createWriteStream(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`);
+  var file = fs.createWriteStream(`userdata/podcasts/${podcast.hash}.mp3`);
 
   var req = request(url);
   // Sometimes we'll get a 400 error without a user-agent
@@ -198,10 +206,29 @@ Zeus.downloadPodcast = function (podcast, callback) {
 
     console.log('Piping download!');
     stream.pipe(file);
-  });
 
-  file.on('end', function () {
-    console.log('Finished downloading the file!');
+    var timesSame = 0;
+    var previous = [];
+    var fileWatcher = fs.watchFile(`userdata/podcasts/${podcast.hash}.mp3`, {  persistent: true, interval: 2000 }, (curr, prev) => {
+      if (!previous) {
+        previous = curr.ctime;
+        return;
+      }
+
+      if (!moment(curr.ctime).isSame(moment(previous))) {
+        api.log('file', `The time isn't the same yet! ${curr.ctime} ${prev.ctime}`);
+        previous = curr.ctime;
+        return;
+      }
+
+      console.log(`The time isn't the same yet! ${curr.ctime} ${previous}`);
+      timesSame ++;
+      if (timesSame > 4) {
+        api.log('file', `Unwatching file...`);
+        fs.unwatchFile(`userdata/podcasts/${podcast.hash}.mp3`);
+        callback(null, true, 100);
+      }
+    });
   });
 };
 
