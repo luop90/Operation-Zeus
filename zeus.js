@@ -152,9 +152,10 @@ Zeus.savePodcast = function(podcast) {
     podcast.podcasts[i].watched = false;
   }
 
-  podcast.imageURL = Zeus.settings.cacheImages ? `../../userdata/cached/${podcast.id}` : podcast.meta['itunes:image']['@'].href;
   Zeus.podcasts.push(podcast);
   podcast.id = Zeus.podcasts.indexOf(podcast);
+  podcast.imageURL = Zeus.settings.cacheImages ? `../../userdata/cached/${podcast.id}` : podcast.meta['itunes:image']['@'].href;
+
   Zeus.updatePodcastFile();
 
   if (Zeus.settings.cacheImages) {
