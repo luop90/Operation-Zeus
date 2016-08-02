@@ -26,5 +26,11 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     Zeus.deleteEpisode($scope.podcast.podcasts[id]);
   };
 
+  $scope.playPodcast = function (podcast, episode) {
+    if ($scope.podcast.podcasts[episode].isDownloaded) {
+      $location.url('/play/' + podcast + '/' + episode);
+    }
+  };
+
   $('ul.tabs').tabs();
 }]);
