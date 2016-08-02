@@ -9,4 +9,29 @@ section(ng-controller="PlayerPageCtrl")
         .card-reveal
           span(ng-bind="episode.title" style="text-align: center").card-title.waves-effect.waves-light
           span(data-bind="episode.description" style="max-width: 500px").left
-      // Some type of player here
+  .row
+    .col.s1
+      span(ng-bind="playback.timePassed")
+    .col.s10.no-select
+      .progress
+        .determinate(ng-style="{ 'width': playback.percentPlayedOutput }")
+    .col.s1
+      span(ng-bind="playback.timeLeft")
+  .row.center.no-select
+    .col.s2.offset-s1
+      span(ng-click="playback.lastEpisode()" data-position="top" data-tooltip="Back to previous episode").hover.tooltipped
+        i.material-icons skip_previous
+    .col.s2
+      span(ng-click="playback.replay10Seconds()" data-position="top" data-tooltip="Rewind 10 seconds").hover.tooltipped
+        i.material-icons replay_10
+    .col.s2
+      span(ng-click="playback.playPodcast()" ng-hide="playback.currentlyPlaying").hover
+        i.material-icons play_arrow
+      span(ng-click="playback.pausePodcast()" ng-show="playback.currentlyPlaying").hover
+        i.material-icons pause
+    .col.s2
+      span(ng-click="playback.forward30Seconds()" data-position="top" data-tooltip="Skip 30 seconds").hover.tooltipped
+        i.material-icons forward_30
+    .col.s2
+      span(ng-click="playback.nextEpisode()" data-position="top" data-tooltip="Skip to next episode").hover.tooltipped
+        i.material-icons skip_next
