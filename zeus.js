@@ -1,9 +1,10 @@
-var request = require('request');
-var fs = require('fs');
-var moment = require('moment');
-var FeedParser = require('feedparser');
+const request = require('request');
+const fs = require('fs');
+const moment = require('moment');
+const FeedParser = require('feedparser');
+const crypto = require('crypto');
+const Electron = require('electron');
 
-var Electron = require('electron');
 var Main = Electron.remote.require('./main.js');
 var Zeus = {};
 
@@ -32,6 +33,15 @@ Zeus.log = function(tag, message) {
   }
 
   console.log(`${timestamp} ${tag} ${message}`);
+};
+
+/**
+ * Creates an MD5 hash for a given input
+ * @param input {STRING}
+ */
+Zeus.md5 = function (input) {
+  var hash = crypto.createHash('md5').update(input).digest('hex');
+  return hash;
 };
 
 /**
@@ -194,14 +204,48 @@ Zeus.updatePodcastFile = function () {
   });
 };
 
+/**
+ * Downloads the .mp3 from the server
+ * @param podcast {PODCAST}
+ */
+Zeus.downloadPodcast = function (podcast, callback) {
+  var url = podcast['rss:enclosure']['@'].url;
+  var file = fs.createWriteStream(`userdata/podcasts/${Zeus.md5(podcast.guid)}.mp3`);
+
+  var req = request(url);
+  // Sometimes we'll get a 400 error without a user-agent
+  req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36');
+  req.setHeader('accept', 'text/html,application/xhtml+xml');
+
+  req.on('error', (error) => {
+    console.log('Failed to download!');
+    callback(error, null);
+  });
+
+  req.on('response', function (res) {
+    var stream = this;
+
+    if (res.statusCode != 200) {
+      return callback(`Bad status code ${res.statusCode}`, null);
+    }
+
+    console.log('Piping download!');
+    stream.pipe(file);
+  });
+
+  file.on('end', function () {
+    console.log('Finished downloading the file!');
+  });
+};
+
 Zeus.formatSecondsToWords = function (seconds) {
   var d = moment.duration(parseInt(seconds), 'seconds');
   var response = `${d.hours()} hr ${d.minutes()} min`;
   return response;
-}
+};
 
 Zeus.formatSecondsToHoursMinutesSeconds = function (seconds) {
   var d = moment.duration(parseInt(seconds), 'seconds');
   var response = `${d.hours()}:${d.minutes()}:${d.seconds()}`;
   return response;
-}
+};

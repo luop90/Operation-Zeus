@@ -9,6 +9,8 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     console.log(id);
     $scope.podcast.podcasts[id].downloading = true;
     $scope.podcast.podcasts[id].downloadPercent = 0;
+
+    Zeus.downloadPodcast($scope.podcast.podcasts[id]);
   };
 
   $scope.deleteEpisode = function (id) {
