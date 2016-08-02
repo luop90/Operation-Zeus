@@ -4,7 +4,6 @@ const FeedParser = require('feedparser');
 const moment = require('moment');
 const Electron = require('electron');
 
-
 var Main = Electron.remote.require('./main.js');
 var api = Electron.remote.require('./api.js');
 var Zeus = {};
@@ -190,6 +189,7 @@ Zeus.updateSavedPodcast = function (podcast) {
 
   Zeus.updatePodcastFile();
 };
+
 /**
  * Downloads the .mp3 from the server
  * @param podcast {PODCAST}

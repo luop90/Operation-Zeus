@@ -45,6 +45,15 @@ section(ng-controller="SettingPageCtrl")
                   span.lever
                   | On
           tr
+            td Cache Podcast Images
+            td
+              .switch
+                label
+                  | Off
+                  input(type="checkbox" ng-model="settings.cacheImages" checked)
+                  span.lever
+                  | On
+          tr
             td Volume
             td
               p.range-field
