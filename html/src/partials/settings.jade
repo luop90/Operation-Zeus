@@ -9,7 +9,7 @@ section(ng-controller="SettingPageCtrl")
             th Value
         tbody
           tr
-            td Theme
+            td Dark Theme
             td
               .switch
                 label
@@ -49,5 +49,17 @@ section(ng-controller="SettingPageCtrl")
             td
               p.range-field
                 input(type="range" min="0" max="100" ng-model="settings.volumeRange")
+          //- tr
+          //-   td Playback
+          //-   td
+          //-     p
+          //-       input(name="playbackType" type="radio" checked).with-gap#stream
+          //-       label(for="stream") Stream Only
+          //-     p
+          //-       input(name="playbackType" type="radio").with-gap#download
+          //-       label(for="download") Download Only
+          //-     p
+          //-       input(name="playbackType" type="radio").with-gap#both
+          //-       label(for="both") Stream while Downloading
                 
       button(ng-click="saveSettings();").btn-flat.good.right.waves-effect.waves-green Save  
