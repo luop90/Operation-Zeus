@@ -148,6 +148,8 @@ Zeus.savePodcast = function(podcast) {
 
     podcast.podcasts[i].podcastLength = api.formatSecondsToHoursMinutesSeconds(podcast.podcasts[i]['itunes:duration']['#']);
     podcast.podcasts[i].podcastLengthParsed = api.formatSecondsToWords(podcast.podcasts[i]['itunes:duration']['#']);
+    podcast.podcasts[i].currentTime = 0;
+    podcast.podcasts[i].watched = false;
   }
 
   Zeus.podcasts.push(podcast);
@@ -179,6 +181,15 @@ Zeus.updatePodcastFile = function () {
   });
 };
 
+/**
+ * Updates a current downloaded
+ * @param podcast {PODCAST}
+ */
+Zeus.updateSavedPodcast = function (podcast) {
+  Zeus.podcasts[podcast.id] = podcast;
+
+  Zeus.updatePodcastFile();
+};
 /**
  * Downloads the .mp3 from the server
  * @param podcast {PODCAST}

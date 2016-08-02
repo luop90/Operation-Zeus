@@ -12,13 +12,11 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
 
     Zeus.downloadPodcast($scope.podcast.podcasts[id], function (error, success, percent) {
       $scope.podcast.podcasts[id].downloadPercent = 100;
-      $scope.podcast.podcasts[id].downloadPercentOutput = $scope.podcast.podcasts[id].downloadPercent + '%';
       clearInterval(updateInterval);
     });
 
     var updateInterval = setInterval(function () {
       $scope.podcast.podcasts[id].downloadPercent ++;
-      $scope.podcast.podcasts[id].downloadPercentOutput = $scope.podcast.podcasts[id].downloadPercent + '%';
     }, 100);
   };
 
@@ -30,6 +28,11 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     if ($scope.podcast.podcasts[episode].isDownloaded) {
       $location.url('/play/' + podcast + '/' + episode);
     }
+  };
+
+  $scope.markAsWatched = function (id) {
+    $scope.podcast.podcasts[id].watched = true;
+    Zeus.updateSavedPodcast($scope.podcast);
   };
 
   $('ul.tabs').tabs();
