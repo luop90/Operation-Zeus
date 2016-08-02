@@ -152,9 +152,14 @@ Zeus.savePodcast = function(podcast) {
     podcast.podcasts[i].watched = false;
   }
 
+  podcast.imageURL = Zeus.settings.cacheImages ? `../../userdata/cached/${podcast.id}` : podcast.meta['itunes:image']['@'].href;
   Zeus.podcasts.push(podcast);
   podcast.id = Zeus.podcasts.indexOf(podcast);
   Zeus.updatePodcastFile();
+
+  if (Zeus.settings.cacheImages) {
+    Zeus.updateCachedImage(podcast);
+  }
 };
 
 /**
@@ -179,12 +184,6 @@ Zeus.updatePodcastFile = function () {
 
     api.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
   });
-
-  if (Zeus.settings.cacheImages) {
-    for (var i = 0; i < Zeus.podcasts.length; i++) {
-      Zeus.updateCachedImage(Zeus.podcasts[i]);
-    }
-  }
 };
 
 /**
