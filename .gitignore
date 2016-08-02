@@ -3,3 +3,5 @@ userdata/settings.json
 userdata/podcasts.json
 
 userdata/podcasts/*.mp3
+userdata/cached/*.png
+userdata/cached/*.jpg
