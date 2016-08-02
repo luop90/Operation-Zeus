@@ -18,6 +18,9 @@ var zeus = angular.module('zeus', [
       })
       .when('/podcast/:id', {
         templateUrl: 'partials/podcast.html'
+      })
+      .when('/play/:podcast/:episode', {
+        templateUrl: 'partials/player.html'
       });
 
     $locationProvider.html5Mode(false);
