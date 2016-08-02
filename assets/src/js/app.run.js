@@ -7,7 +7,18 @@ function runBlock($window, $rootScope, $location) {
   $rootScope.podcasts = [];
 
   Zeus.loadSettings(function (data) {
-    $rootScope.settings = data;
+    if (data.darkTheme === undefined) {
+      $rootScope.settings = {
+        darkTheme: true,
+        animations:  true,
+        analytics:  true,
+        autoplay:  false,
+        volume: 50,
+        cacheImages: true
+      };
+    } else {
+      $rootScope.settings = data;
+    }
 
     Zeus.loadSavedPodcasts(function (data) {
       console.log(data);

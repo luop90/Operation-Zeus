@@ -1,6 +1,5 @@
 zeus.controller('SettingPageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
   $scope.settings = $rootScope.settings;
-  $scope.settings.darkTheme = !$scope.settings.lightTheme;
 
   $scope.saveSettings = function () {
     // switch ($('input[type="radio"][name="playbackType"]:checked').attr('id')) {
@@ -12,7 +11,7 @@ zeus.controller('SettingPageCtrl', ['$scope', '$rootScope', function ($scope, $r
     // }
 
     $rootScope.settings = {
-      lightTheme: !$scope.settings.darkTheme,
+      darkTheme: $scope.settings.darkTheme,
       animations: $scope.settings.animations,
       analytics: $scope.settings.analytics,
       autoplay: $scope.settings.autoplay,
