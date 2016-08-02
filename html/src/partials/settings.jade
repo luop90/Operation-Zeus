@@ -1,7 +1,7 @@
 section(ng-controller="SettingPageCtrl")
   .row
     .col.s12
-      h3.center About
+      h3.center Settings
       table
         thead
           tr
@@ -11,34 +11,43 @@ section(ng-controller="SettingPageCtrl")
           tr
             td Theme
             td
-              p
-                input(type="radio" name="theme").with-gap#lightTheme
-                label(for="lightTheme") Light
-              p
-                input(type="radio" name="theme" checked).with-gap#darkTheme
-                label(for="darkTheme") Dark
+              .switch
+                label
+                  | Off
+                  input(type="checkbox" ng-model="settings.darkTheme" checked)
+                  span.lever
+                  | On
           tr
             td Animations
             td
-              p
-                input(type="radio" name="animations" checked).with-gap#animationsOn
-                label(for="animationsOn") On
-              p
-                input(type="radio" name="animations").with-gap#animationsOff
-                label(for="animationsOff") Off
+              .switch
+                label
+                  | Off
+                  input(type="checkbox" ng-model="settings.animations" checked)
+                  span.lever
+                  | On
+          tr
+            td Analytics
+            td
+              .switch
+                label
+                  | Off
+                  input(type="checkbox" ng-model="settings.analytics" checked)
+                  span.lever
+                  | On
+          tr
+            td Auto-Play
+            td
+              .switch
+                label
+                  | Off
+                  input(type="checkbox" ng-model="settings.autoplay" checked)
+                  span.lever
+                  | On
           tr
             td Volume
             td
               p.range-field
-                input(type="range" min="0" max="100")#volumeRange
-          tr
-            td Analytics
-            td
-              p
-                input(type="radio" name="analytics" checked).with-gap#analyticsOn
-                label(for="analyticsOn") On
-              p
-                input(type="radio" name="analytics").with-gap#analyticsOff
-                label(for="analyticsOff") Off
+                input(type="range" min="0" max="100" ng-model="settings.volumeRange")
                 
       button(ng-click="saveSettings();").btn-flat.good.right.waves-effect.waves-green Save  

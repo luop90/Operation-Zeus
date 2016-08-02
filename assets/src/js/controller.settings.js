@@ -1,12 +1,14 @@
 zeus.controller('SettingPageCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
-  $scope.userSettings = {};
+  $scope.settings = $rootScope.settings;
+  $scope.settings.darkTheme = !$scope.settings.lightTheme;
 
   $scope.saveSettings = function () {
     $rootScope.settings = {
-      lightTheme: !$('input#darkTheme').is(':checked'),
-      animations: $('input#animationsOn').is(':checked'),
-      volume: $('input#volumeRange').val(),
-      analytics: $('input#analyticsOn').is(':checked')
+      lightTheme: !$scope.settings.darkTheme,
+      animations: $scope.settings.animations,
+      analytics: $scope.settings.analytics,
+      autoplay: $scope.settings.autoplay,
+      volume: $scope.settings.volumeRange
     };
 
     Zeus.saveSettings($rootScope.settings);
