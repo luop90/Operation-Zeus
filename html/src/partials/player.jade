@@ -12,6 +12,7 @@ section(ng-controller="PlayerPageCtrl")
   .row
     .col.s1
       span(ng-bind="sound.currentTime | trackTime")
+      span &nbsp;
     .col.s10.no-select
       .progress
         .determinate(ng-style="{ 'width': (sound.progress * 100) + '%' }")
