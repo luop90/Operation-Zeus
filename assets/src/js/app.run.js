@@ -20,6 +20,7 @@ function runBlock($window, $rootScope, $location) {
       $rootScope.settings = data;
     }
 
+    Zeus.settings = $rootScope.settings;
     Zeus.loadSavedPodcasts(function (data) {
       console.log(data);
       $rootScope.podcasts = data;

@@ -9,6 +9,7 @@ var api = Electron.remote.require('./api.js');
 var Zeus = {};
 
 Zeus.podcasts = [];
+Zeus.settings = {};
 
 /**
  * Fetches the XML from an RSS feed
@@ -178,6 +179,42 @@ Zeus.updatePodcastFile = function () {
 
     api.log('file', `Wrote podcast data to podcasts.json, ${Zeus.podcasts.length}`);
   });
+
+  if (Zeus.settings.cacheImages) {
+    for (var i = 0; i < Zeus.podcasts.length; i++) {
+      Zeus.updateCachedImage(Zeus.podcasts[i]);
+    }
+  }
+};
+
+/**
+ * Re-downloads the images
+ * @param podcast {PODCAST}
+ */
+Zeus.updateCachedImage = function (podcast) {
+  var url = podcast.meta['itunes:image']['@'].href;
+  var file = fs.createWriteStream(`userdata/cached/${podcast.id}`);
+  var req = request(url);
+
+  // Sometimes we'll get a 400 error without a user-agent
+  req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36');
+  req.setHeader('accept', 'text/html,application/xhtml+xml');
+
+  req.on('error', (error) => {
+    api.log('error', `Failed to download image for podcast ${podcast.meta.title}, ${error}`);
+  });
+
+  req.on('response', function (res) {
+    var stream = this;
+
+    if (res.statusCode != 200) {
+      api.log('error', `Bad status code ${res.statusCode}`);
+      return;
+    }
+
+    api.log('file', `Piping download for image of podcast ${podcast.meta.title}`);
+    stream.pipe(file);
+  });
 };
 
 /**
@@ -197,8 +234,8 @@ Zeus.updateSavedPodcast = function (podcast) {
 Zeus.downloadPodcast = function (podcast, callback) {
   var url = podcast['rss:enclosure']['@'].url;
   var file = fs.createWriteStream(`userdata/podcasts/${podcast.hash}.mp3`);
-
   var req = request(url);
+
   // Sometimes we'll get a 400 error without a user-agent
   req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36');
   req.setHeader('accept', 'text/html,application/xhtml+xml');
@@ -218,28 +255,28 @@ Zeus.downloadPodcast = function (podcast, callback) {
     console.log('Piping download!');
     stream.pipe(file);
 
-    var timesSame = 0;
-    var previous = [];
-    var fileWatcher = fs.watchFile(`userdata/podcasts/${podcast.hash}.mp3`, {  persistent: true, interval: 2000 }, (curr, prev) => {
-      if (!previous) {
-        previous = curr.ctime;
-        return;
-      }
-
-      if (!moment(curr.ctime).isSame(moment(previous))) {
-        api.log('file', `The time isn't the same yet! ${curr.ctime} ${prev.ctime}`);
-        previous = curr.ctime;
-        return;
-      }
-
-      console.log(`The time isn't the same yet! ${curr.ctime} ${previous}`);
-      timesSame ++;
-      if (timesSame > 4) {
-        api.log('file', `Unwatching file...`);
-        fs.unwatchFile(`userdata/podcasts/${podcast.hash}.mp3`);
-        callback(null, true, 100);
-      }
-    });
+    // var timesSame = 0;
+    // var previous = [];
+    // var fileWatcher = fs.watchFile(`userdata/podcasts/${podcast.hash}.mp3`, {  persistent: true, interval: 2000 }, (curr, prev) => {
+    //   if (!previous) {
+    //     previous = curr.ctime;
+    //     return;
+    //   }
+    //
+    //   if (!moment(curr.ctime).isSame(moment(previous))) {
+    //     api.log('file', `The time isn't the same yet! ${curr.ctime} ${prev.ctime}`);
+    //     previous = curr.ctime;
+    //     return;
+    //   }
+    //
+    //   console.log(`The time isn't the same yet! ${curr.ctime} ${previous}`);
+    //   timesSame ++;
+    //   if (timesSame > 4) {
+    //     api.log('file', `Unwatching file...`);
+    //     fs.unwatchFile(`userdata/podcasts/${podcast.hash}.mp3`);
+    //     callback(null, true, 100);
+    //   }
+    // });
   });
 };
 
