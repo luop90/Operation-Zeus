@@ -34,3 +34,8 @@ angular
   .directive('preloaderSmall', PreloaderSmallDirective)
   .directive('preloaderSmallBlue', PreloaderSmallBlueDirective)
   .directive('podcastEpisode', PodcastEpisodeDirective);
+
+Number.prototype.round = function (p) {
+  p = p || 10;
+  return parseFloat(this.toFixed(p));
+};

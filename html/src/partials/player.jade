@@ -14,7 +14,8 @@ section(ng-controller="PlayerPageCtrl")
       span(ng-bind="sound.currentTime | trackTime")
       span &nbsp;
     .col.s10.no-select
-      .progress
+      span(data-content="{{ playback.hoverTime }}" ng-show="showPosition").tooltip
+      .progress(ng-click="playback.goToPosition($event)" ng-mouseenter="playback.showPosition($event)" ng-mouseleave="showPosition = false;" style="height: 7px;").hover
         .determinate(ng-style="{ 'width': (sound.progress * 100) + '%' }")
     .col.s1
       span(ng-bind="sound.remaining | trackTime")
