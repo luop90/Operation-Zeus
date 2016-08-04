@@ -9,7 +9,7 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
   for (var i = 0; i < $scope.podcast.podcasts.length; i++) {
     $scope.podcast.podcasts[i].downloading = false;
   }
-  
+
   $scope.downloadEpisode = function (id) {
     console.log(id);
     $scope.podcast.podcasts[id].downloading = true;
@@ -26,7 +26,11 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
   };
 
   $scope.deleteEpisode = function (id) {
-    Zeus.deleteEpisode($scope.podcast.podcasts[id]);
+    Zeus.deleteEpisode($scope.podcast.podcasts[id], function (success) {
+      if (success) {
+        $scope.podcast.podcasts[id].isDownloaded = false;
+      }
+    });
   };
 
   $scope.playPodcast = function (podcast, episode) {
