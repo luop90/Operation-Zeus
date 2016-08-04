@@ -14,4 +14,5 @@ a(href="javascript:void(0);" ng-click="deleteEpisode(episode.id)" ng-show="episo
 a(href="javascript:void(0)" ng-click="markAsWatched(episode.id)" ng-class="{ 'already-watched': episode.watched }").secondary-content
   i.material-icons markunread
 .progress(ng-show="episode.downloading")
-  div(ng-style="{ 'width': episode.downloadPercent + '%' }").determinate
+  //- div(ng-style="{ 'width': episode.downloadPercent + '%' }").determinate
+  .indeterminate
