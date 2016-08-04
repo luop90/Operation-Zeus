@@ -284,7 +284,7 @@ Zeus.downloadPodcast = function (podcast, callback) {
  * Deletes the .mp3 from the client
  * @param podcast {PODCAST}
  */
-Zeus.deletePodcast = function (podcast, callback) {
+Zeus.deleteEpisode = function (podcast, callback) {
   fs.unlinkSync(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`);
 
   callback(true);
