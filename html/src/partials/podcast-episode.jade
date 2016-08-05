@@ -1,4 +1,4 @@
-img(src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}" ng-click="playPodcast(podcast.id, episode.id);").circle
+img(ng-src="{{ ::episode.image.url }}" alt="{{ ::podcast.meta.title }}" ng-click="playPodcast(podcast.id, episode.id);").circle
 span(ng-bind="episode.title" ng-click="playPodcast(podcast.id, episode.id);").title
 p(ng-click="playPodcast(podcast.id, episode.id);")
   span(ng-bind="episode.pubDateParsed")

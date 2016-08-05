@@ -3,7 +3,7 @@ section(ng-controller="PlayerPageCtrl")
     .col.s10.offset-s1
       .card
         .card-image.waves-effect.waves-light.waves-block
-          img(src="{{ ::episode.image.url }}").activator
+          img(ng-src="{{ ::episode.image.url }}").activator
         .card-content.center
           span(ng-bind="episode.title").card-title.activator.waves-effect.waves-light.waves-block
         .card-reveal
