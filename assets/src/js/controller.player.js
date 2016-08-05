@@ -3,7 +3,6 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
   $scope.episode = $rootScope.podcasts[$route.current.params.podcast].podcasts[$route.current.params.episode];
   $scope.episode.watched = true;
 
-  console.log(ngAudio.performance);
   $scope.sound = ngAudio.load('../../userdata/podcasts/' + $scope.episode.hash + '.mp3');
   $scope.sound.currentTime = $scope.episode.currentTime;  // Load saved time
 
