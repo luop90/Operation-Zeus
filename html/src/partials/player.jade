@@ -17,7 +17,7 @@ section(ng-controller="PlayerPageCtrl")
       span(ng-show="playback.showHoverPosition" ng-style="{ 'left': playback.tooltipLeft, 'top': playback.tooltipTop }").playback-tooltip
         span(ng-bind="playback.hoverTime")
         .playback-backdrop(ng-show="playback.showHoverPosition")
-      .progress(ng-click="playback.goToPosition($event)" ng-mouseover="playback.showPosition($event)" ng-mouseleave="playback.showHoverPosition = false;" style="height: 7px;").hover
+      .progress(ng-click="playback.goToPosition($event)" ng-mousemove="playback.showPosition($event)" ng-mouseleave="playback.showHoverPosition = false;" style="height: 7px;").hover
         .determinate(ng-style="{ 'width': (sound.progress * 100) + '%' }")
     .col.s1
       span(ng-bind="sound.remaining | trackTime")
