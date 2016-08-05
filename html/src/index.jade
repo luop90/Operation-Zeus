@@ -6,7 +6,7 @@ html(lang="en" ng-app="zeus")
   body(ng-controller="MainCtrl" ng-class="{ 'dark-theme': $root.settings.darkTheme }")
     main
       include includes/header
-      .container(ng-view)
+      div(ng-view ng-class="{ 'slide-left': $root.settings.animations }").container
     article(ng-hide="$root.fullyLoaded")#splash-screen
       h1 Loading...
       h4 "Code names are fun" -CGPGrey
