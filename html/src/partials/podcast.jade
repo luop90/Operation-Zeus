@@ -19,7 +19,7 @@ section(ng-controller="PodcastPageCtrl" ng-init="showUnplayedOnly = true;")
           a(href="#Feed" ng-click="showUnplayedOnly = false;") Feed
     .col.s12#Unplayed
       ul.collection
-        li(ng-repeat="episode in podcast.podcasts" ng-class="{ 'mouse-hover waves-effect waves-light block': episode.isDownloaded }" ng-hide="showUnplayedOnly && episode.watched").collection-item.avatar
+        li(ng-repeat="episode in podcast.podcasts" ng-class="{ 'mouse-hover waves-effect waves-light block': episode.isDownloaded }" ng-hide="showUnplayedOnly && episode.watched").collection-item.avatar.animate-toggle
           podcast-episode
     .col.s12#Feed
       ul.collection
