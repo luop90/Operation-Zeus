@@ -11,8 +11,6 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     hoverTime: '0:00:00',
     tooltipLeft: 0,
     tooltipTop: 0,
-    tooltipWidth: 0,
-    tooltipHeight: 0,
     showHoverPosition: false,
     lastEpisode: function () {
       $location.url('/play/' + $route.current.params.podcast + '/' +(parseInt($route.current.params.episode) + 1));
