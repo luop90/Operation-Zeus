@@ -15,7 +15,7 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     $scope.podcast.podcasts[id].downloading = true;
     $scope.podcast.podcasts[id].downloadPercent = 0;
 
-    Zeus.downloadPodcast($scope.podcast.podcasts[id], function (error, success, percent) {
+    Zeus.downloadEpisode($scope.podcast.podcasts[id], function (error, success, percent) {
       $scope.podcast.podcasts[id].downloadPercent = 100;
       clearInterval(updateInterval);
     });
