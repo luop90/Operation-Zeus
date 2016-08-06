@@ -28,7 +28,9 @@ function createWindow(filename) {
     titleBarStyle: 'hidden',
     width: 800,
     height: 600,
-    title: 'Operation Zeus'
+    title: 'Operation Zeus',
+    backgroundColor: '#222',
+    autoHideMenuBar: true
   });
 
   g_currentWindow.loadURL(`file://${__dirname}/html/build/${filename}`);
