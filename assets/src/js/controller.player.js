@@ -15,7 +15,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     tooltipHeight: 0,
     showHoverPosition: false,
     lastEpisode: function () {
-      $location.url('/play/' + $route.current.params.podcast + '/' + $route.current.params.episode - 1);
+      $location.url('/play/' + $route.current.params.podcast + '/' +(parseInt($route.current.params.episode) + 1));
     },
     replay10Seconds: function () {
       $scope.sound.currentTime -= 10;
@@ -32,7 +32,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
       $scope.sound.currentTime += 30;
     },
     nextEpisode: function () {
-      $location.url('/play/' + $route.current.params.podcast + '/' + $route.current.params.episode + 1);
+      $location.url('/play/' + $route.current.params.podcast + '/' + (parseInt($route.current.params.episode) - 1));
     },
     goToPosition: function (e) {
       var totalWidth = document.getElementsByClassName('progress')[0].clientWidth;
