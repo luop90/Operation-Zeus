@@ -11,8 +11,7 @@ section(ng-controller="PlayerPageCtrl")
           span(data-bind="episode.description" style="max-width: 500px").left
   .row.no-select
     .col.s1
-      span(ng-bind="sound.currentTime | trackTime")
-      span &nbsp;
+      span(ng-bind="sound.currentTime | trackTime" style="margin-left: -5px;")
     .col.s10.no-select
       span(ng-show="playback.showHoverPosition" ng-style="{ 'left': playback.tooltipLeft, 'top': playback.tooltipTop }").playback-tooltip
         span(ng-bind="playback.hoverTime")
