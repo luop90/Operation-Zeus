@@ -9,7 +9,7 @@ section(ng-controller="PlayerPageCtrl")
         .card-reveal
           span(ng-bind="episode.title" style="text-align: center").card-title.waves-effect.waves-light
           span(data-bind="episode.description" style="max-width: 500px").left
-  .row
+  .row.no-select
     .col.s1
       span(ng-bind="sound.currentTime | trackTime")
       span &nbsp;
