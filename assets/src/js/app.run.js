@@ -1,3 +1,5 @@
+const shell = require('electron').shell;
+
 angular
   .module('zeus')
   .run(runBlock);
@@ -28,3 +30,8 @@ function runBlock($window, $rootScope, $location) {
     });
   });
 }
+
+$(document).on('click', 'a[href^="http"]', function(event) {
+    event.preventDefault();
+    shell.openExternal(this.href);
+});

@@ -5,7 +5,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
 
   $scope.sound = ngAudio.load('../../userdata/podcasts/' + $scope.episode.hash + '.mp3');
   $scope.sound.currentTime = $scope.episode.currentTime;  // Load saved time
-
+  
   $scope.playback = {
     currentlyPlaying: false,
     hoverTime: '0:00:00',
