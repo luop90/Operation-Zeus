@@ -13,14 +13,17 @@ Zeus.settings = {};
 
 /**
  * Fetches the XML from an RSS feed
- * @param url {STRING}
- * @param callback {FUNCTION}
+ * @param {STRING} url
+ * @param {BOOLEAN} newPodcast
+ * @param {INT} id
+ * @param {FUNCTION} callback
  */
-Zeus.addPodcast = function(url, callback) {
+Zeus.fetchPodcastRSS = function(url, newPodcast, id, callback) {
   var req = request(url);
   var feedparser = new FeedParser();
   var podcast = {};
   podcast.podcasts = [];
+  podcast.rssUrl = url;
 
   // Sometimes we'll get a 400 error without a user-agent
   req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36');
@@ -60,14 +63,15 @@ Zeus.addPodcast = function(url, callback) {
   });
 
   feedparser.on('end', () => {
-    Zeus.savePodcast(podcast);
-    callback(null, podcast);
+    podcast.loading = false;
+    Zeus.savePodcast(podcast, newPodcast, id);
+    callback(null, podcast, id);
   });
 };
 
 /**
  * Reads our podcasts from the JSON file
- * @param callback {FUNCTION}
+ * @param {FUNCTION} callback
  */
 Zeus.loadSavedPodcasts = function(callback) {
   var data = [];
@@ -100,7 +104,7 @@ Zeus.loadSavedPodcasts = function(callback) {
 
 /**
  * Reads our userdata settings
- * @param callback {FUNCTION}
+ * @param {FUNCTION} callback
  */
 Zeus.loadSettings = function(callback) {
   var data = {};
@@ -114,8 +118,8 @@ Zeus.loadSettings = function(callback) {
 
 /**
  * Saves settings to a file
- * @param data {OBJECT}
- * @param callback {FUNCTION}
+ * @param {OBJECT} data
+ * @param {FUNCTION} callback
  */
 Zeus.saveSettings = function(data, callback) {
 
@@ -134,9 +138,11 @@ Zeus.saveSettings = function(data, callback) {
 
 /**
  * Saves a podcast to our array / file
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
+ * @param {BOOLEAN} newPodcast
+ * @param {INT} id
  */
-Zeus.savePodcast = function(podcast) {
+Zeus.savePodcast = function(podcast, newPodcast, id) {
   for (var i = 0; i < podcast.podcasts.length; i++) {
     podcast.podcasts[i].pubDateParsed = moment(podcast.podcasts[i].pubDate).format('MMMM DD, YYYY');
     podcast.podcasts[i].id = i;
@@ -152,8 +158,14 @@ Zeus.savePodcast = function(podcast) {
     podcast.podcasts[i].watched = false;
   }
 
-  Zeus.podcasts.push(podcast);
-  podcast.id = Zeus.podcasts.indexOf(podcast);
+  if (newPodcast) {
+    Zeus.podcasts.push(podcast);
+    podcast.id = Zeus.podcasts.indexOf(podcast);
+  } else {
+    podcast.id = id;
+    Zeus.podcasts[id] = podcast;
+  }
+
   podcast.imageURL = Zeus.settings.cacheImages ? `../../userdata/cached/${podcast.id}` : podcast.meta['itunes:image']['@'].href;
 
   Zeus.updatePodcastFile();
@@ -165,7 +177,7 @@ Zeus.savePodcast = function(podcast) {
 
 /**
  * Removes a podcast from our array / file
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
  */
 Zeus.removePodcast = function(podcast) {
   Zeus.podcasts.splice(podcast.id, 1);
@@ -189,7 +201,7 @@ Zeus.updatePodcastFile = function () {
 
 /**
  * Re-downloads the images
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
  */
 Zeus.updateCachedImage = function (podcast) {
   var url = podcast.meta['itunes:image']['@'].href;
@@ -219,7 +231,7 @@ Zeus.updateCachedImage = function (podcast) {
 
 /**
  * Updates a current downloaded
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
  */
 Zeus.updateSavedPodcast = function (podcast) {
   Zeus.podcasts[podcast.id] = podcast;
@@ -229,9 +241,9 @@ Zeus.updateSavedPodcast = function (podcast) {
 
 /**
  * Downloads the .mp3 from the server
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
  */
-Zeus.downloadPodcast = function (podcast, callback) {
+Zeus.downloadEpisode = function (podcast, callback) {
   var url = podcast['rss:enclosure']['@'].url;
   var file = fs.createWriteStream(`userdata/podcasts/${podcast.hash}.mp3`);
   var req = request(url);
@@ -282,7 +294,7 @@ Zeus.downloadPodcast = function (podcast, callback) {
 
 /**
  * Deletes the .mp3 from the client
- * @param podcast {PODCAST}
+ * @param {PODCAST} podcast
  */
 Zeus.deleteEpisode = function (podcast, callback) {
   fs.unlinkSync(`userdata/podcasts/${api.md5(podcast.guid)}.mp3`);
