@@ -5,7 +5,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
 
   $scope.sound = ngAudio.load('../../userdata/podcasts/' + $scope.episode.hash + '.mp3');
   $scope.sound.currentTime = $scope.episode.currentTime;  // Load saved time
-  
+
   $scope.playback = {
     currentlyPlaying: false,
     hoverTime: '0:00:00',
@@ -14,6 +14,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     showHoverPosition: false,
     lastEpisode: function () {
       $location.url('/play/' + $route.current.params.podcast + '/' +(parseInt($route.current.params.episode) + 1));
+      $scope.sound.pause();
     },
     replay10Seconds: function () {
       $scope.sound.currentTime -= 10;
@@ -31,6 +32,7 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     },
     nextEpisode: function () {
       $location.url('/play/' + $route.current.params.podcast + '/' + (parseInt($route.current.params.episode) - 1));
+      $scope.sound.pause();
     },
     goToPosition: function (e) {
       var totalWidth = document.getElementsByClassName('progress')[0].clientWidth;
