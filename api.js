@@ -9,7 +9,7 @@ var api = {};
  * @param message {STRING}
  */
 api.log = function(tag, message) {
-  var timestamp = moment.utc().format('YYYY-mm-dd HH:mm:ss');
+  var timestamp = moment.utc().format('YYYY-MM-DD hh:mm:ss');
   var tag = '';
   switch (tag) {
     case 'request':
