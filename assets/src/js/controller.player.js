@@ -65,7 +65,9 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
   }, 1000 * 30);
 
   $('[data-bind="episode.description"]').html($scope.episode.description);
-  $('.tooltipped').tooltip();
+  $('.tooltipped').tooltip({
+    delay: 10
+  });
 }]);
 
 function parseTime(input) {
