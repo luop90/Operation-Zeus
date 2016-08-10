@@ -1,10 +1,11 @@
-zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location', '$interval','ngAudio', function ($scope, $rootScope, $route, $location, $interval, ngAudio) {
+zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location', '$interval', '$timeout', 'ngAudio', function ($scope, $rootScope, $route, $location, $interval, $timeout, ngAudio) {
   $scope.podcast = $rootScope.podcasts[$route.current.params.podcast];
   $scope.episode = $rootScope.podcasts[$route.current.params.podcast].podcasts[$route.current.params.episode];
+  $scope.episode.playbackURL = '../../userdata/podcasts/' + $scope.episode.hash + '.mp3';
   $scope.episode.watched = true;
 
-  $scope.sound = ngAudio.load('../../userdata/podcasts/' + $scope.episode.hash + '.mp3');
-  $scope.sound.currentTime = $scope.episode.currentTime;  // Load saved time
+  ngAudio.unlock = false;
+  $scope.sound = ngAudio.load('audioSource');
 
   $scope.playback = {
     currentlyPlaying: false,
@@ -54,7 +55,11 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     }
   };
 
-  var updateTime = $interval(function () {
+  $timeout(function () {
+    $scope.sound.currentTime = $scope.episode.currentTime || 0;  // Load saved time
+  }, 400);
+
+  $interval(function () {
     $scope.episode.currentTime = $scope.sound.currentTime;
     Zeus.updateSavedPodcast($scope.podcast);
   }, 1000 * 30);

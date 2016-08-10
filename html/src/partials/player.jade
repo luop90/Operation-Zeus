@@ -38,3 +38,6 @@ section(ng-controller="PlayerPageCtrl")
     .col.s2
       span(ng-click="playback.nextEpisode()" data-position="top" data-tooltip="Skip to next episode").hover.tooltipped
         i.material-icons skip_next
+  .row.hide
+    audio#audioSource
+      source(ng-src="{{ ::episode.playbackURL }}")
