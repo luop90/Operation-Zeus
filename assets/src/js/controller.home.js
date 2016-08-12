@@ -30,23 +30,19 @@ zeus.controller('HomePageCtrl', ['$scope', '$rootScope', '$timeout', function ($
         return;
       }
 
-      // $rootScope.podcasts.push(podcast);
-      // var i = $rootScope.podcasts.indexOf(podcast);
-      // $rootScope.podcasts[i].id = i;
-      $('.modal#addPodcastModal').closeModal();
-      // console.log(podcast);
-
       $scope.podcastInfo.url = '';
       $scope.loadingRSSFeed = false;
 
       $timeout(function () {
+        $('.modal#addPodcastModal').closeModal();
         $scope.loadingPodcasts = false;
+
         $scope.$apply();
 
         $('.tooltipped').tooltip({
-          delay: 50
+          delay: 10
         });
-      }, 1000); // Give image time to download, if caching
+      }, 2000); // Give image time to download, if caching
     });
   };
 
