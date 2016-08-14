@@ -4,7 +4,9 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
   $scope.episode.playbackURL = '../../userdata/podcasts/' + $scope.episode.hash + '.mp3';
   $scope.episode.watched = true;
 
-  ngAudio.unlock = false;
+  var updateInterval = null;
+
+  ngAudio.unlock = undefined;
   $scope.sound = ngAudio.load('audioSource');
 
   $scope.playback = {
@@ -23,10 +25,20 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     playPodcast: function () {
       $scope.playback.currentlyPlaying = true;
       $scope.sound.play();
+
+      updateInterval = $interval(function () {
+        $scope.episode.currentTime = $scope.sound.currentTime;
+        Zeus.updateSavedPodcast($scope.podcast);
+      }, 1000 * 30);
     },
     pausePodcast: function () {
       $scope.playback.currentlyPlaying = false;
       $scope.sound.pause();
+
+      if (angular.isDefined(updateInterval)) {
+        $interval.cancel(updateInterval);
+        updateInterval = undefined;
+      }
     },
     forward30Seconds: function () {
       $scope.sound.currentTime += 30;
@@ -59,14 +71,14 @@ zeus.controller('PlayerPageCtrl', ['$scope', '$rootScope', '$route', '$location'
     $scope.sound.currentTime = $scope.episode.currentTime || 0;  // Load saved time
   }, 400);
 
-  $interval(function () {
-    $scope.episode.currentTime = $scope.sound.currentTime;
-    Zeus.updateSavedPodcast($scope.podcast);
-  }, 1000 * 30);
-
   $('[data-bind="episode.description"]').html($scope.episode.description);
   $('.tooltipped').tooltip({
     delay: 10
+  });
+
+  $scope.$on('destroy', function () {
+    // Destroy the interval when the $scope is destroyed (such as on a new page).
+    $scope.playback.pausePodcast();
   });
 }]);
 
