@@ -267,7 +267,6 @@ Zeus.downloadEpisode = function (podcast, callback) {
     console.log('Piping download!');
     stream.pipe(file);
 
-    var timesSame = 0;
     var notSame = true;
     var sizeOfFile = parseInt(res.headers['content-length']);
 
@@ -281,6 +280,7 @@ Zeus.downloadEpisode = function (podcast, callback) {
       }
     });
 
+    // The file listener stops calling once prev = curr (grumble grumble), so we have to keep track of when that happens with an interval
     var checkInterval = setInterval(function () {
       if (!notSame) {
         api.log('file', `Unwatching file...`);
