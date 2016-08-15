@@ -54,6 +54,15 @@ section(ng-controller="SettingPageCtrl")
                   span.lever
                   | On
           tr
+            td Auto-Update Podcasts
+            td
+              .switch
+                label 
+                  | Off
+                  input(type="checkbox" ng-model="settings.autoUpdate" checked)
+                  span.lever
+                  | On
+          tr
             td Volume
             td
               p.range-field

@@ -16,8 +16,8 @@ zeus.controller('SettingPageCtrl', ['$scope', '$rootScope', function ($scope, $r
       analytics: $scope.settings.analytics,
       autoplay: $scope.settings.autoplay,
       volume: $scope.settings.volumeRange,
-      cacheImages: $scope.settings.cacheImages
-      // playbackType:
+      cacheImages: $scope.settings.cacheImages,
+      autoUpdate: $scope.settings.autoUpdate
     };
 
     Zeus.saveSettings($rootScope.settings);
