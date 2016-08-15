@@ -267,28 +267,31 @@ Zeus.downloadEpisode = function (podcast, callback) {
     console.log('Piping download!');
     stream.pipe(file);
 
-    // var timesSame = 0;
-    // var previous = [];
-    // var fileWatcher = fs.watchFile(`userdata/podcasts/${podcast.hash}.mp3`, {  persistent: true, interval: 2000 }, (curr, prev) => {
-    //   if (!previous) {
-    //     previous = curr.ctime;
-    //     return;
-    //   }
-    //
-    //   if (!moment(curr.ctime).isSame(moment(previous))) {
-    //     api.log('file', `The time isn't the same yet! ${curr.ctime} ${prev.ctime}`);
-    //     previous = curr.ctime;
-    //     return;
-    //   }
-    //
-    //   console.log(`The time isn't the same yet! ${curr.ctime} ${previous}`);
-    //   timesSame ++;
-    //   if (timesSame > 4) {
-    //     api.log('file', `Unwatching file...`);
-    //     fs.unwatchFile(`userdata/podcasts/${podcast.hash}.mp3`);
-    //     callback(null, true, 100);
-    //   }
-    // });
+    var timesSame = 0;
+    var notSame = true;
+    var sizeOfFile = parseInt(res.headers['content-length']);
+
+    // Track the size of the file, to upload our download bar.
+    var fileWatcher = fs.watchFile(`userdata/podcasts/${podcast.hash}.mp3`, {  persistent: true, interval: 500 }, (curr, prev) => {
+      if (curr != prev) {
+        console.log(`The size isn't the same yet! ${curr.size} ${prev.size}`);
+        callback(null, true, curr.size / sizeOfFile);
+        notSame = true;
+        return;
+      }
+    });
+
+    var checkInterval = setInterval(function () {
+      if (!notSame) {
+        api.log('file', `Unwatching file...`);
+        fs.unwatchFile(`userdata/podcasts/${podcast.hash}.mp3`);
+
+        clearInterval(checkInterval);
+        callback(null, true, 1);
+      }
+
+      notSame = false;
+    }, 2500);
   });
 };
 

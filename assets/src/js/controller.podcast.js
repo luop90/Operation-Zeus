@@ -1,4 +1,4 @@
-zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location', '$timeout', function ($scope, $rootScope, $route, $location, $timeout) {
+zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location', '$timeout', '$interval', function ($scope, $rootScope, $route, $location, $timeout, $interval) {
   $scope.podcast = $rootScope.podcasts[$route.current.params.id];
   $scope.showUnplayedOnly = true;
   if (!$scope.podcast) {
@@ -16,13 +16,21 @@ zeus.controller('PodcastPageCtrl', ['$scope', '$rootScope', '$route', '$location
     $scope.podcast.podcasts[id].downloadPercent = 0;
 
     Zeus.downloadEpisode($scope.podcast.podcasts[id], function (error, success, percent) {
-      $scope.podcast.podcasts[id].downloadPercent = 100;
-      clearInterval(updateInterval);
-    });
+      if (percent != 1) {
+        console.log(percent);
+        $scope.podcast.podcasts[id].downloadPercent = percent;
+        $scope.$apply();
+        return;
+      }
 
-    var updateInterval = setInterval(function () {
-      $scope.podcast.podcasts[id].downloadPercent ++;
-    }, 100);
+      $scope.podcast.podcasts[id].downloadPercent = 1;
+      $scope.$apply();
+
+      $timeout(function () {
+        $scope.podcast.podcasts[id].downloading = false;
+        $scope.podcast.podcasts[id].isDownloaded = true;
+      }, 1000);
+    });
   };
 
   $scope.deleteEpisode = function (id) {
