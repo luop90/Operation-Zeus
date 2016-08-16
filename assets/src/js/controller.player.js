@@ -90,36 +90,37 @@ function parseTime(input) {
   var seconds = 0;
 
   if (totalSec > 3599) {
-      hours = Math.floor(totalSec / 3600);
-      minutes = Math.floor((totalSec - (hours * 3600)) / 60);
-      seconds = (totalSec - ((minutes * 60) + (hours * 3600)));
-      if (hours.toString().length == 1) {
-          hours = '0' + (Math.floor(totalSec / 3600)).toString();
-      }
-      if (minutes.toString().length == 1) {
-          minutes = '0' + (Math.floor((totalSec - (hours * 3600)) / 60)).toString();
-      }
-      if (seconds.toString().length == 1) {
-          seconds = '0' + (totalSec - ((minutes * 60) + (hours * 3600))).toString();
-      }
-      output = hours + ':' + minutes + ':' + seconds;
+    hours = Math.floor(totalSec / 3600);
+    minutes = Math.floor((totalSec - (hours * 3600)) / 60);
+    seconds = (totalSec - ((minutes * 60) + (hours * 3600)));
+    if (hours.toString().length == 1) {
+      hours = '0' + (Math.floor(totalSec / 3600)).toString();
+    }
+    if (minutes.toString().length == 1) {
+      minutes = '0' + (Math.floor((totalSec - (hours * 3600)) / 60)).toString();
+    }
+    if (seconds.toString().length == 1) {
+      seconds = '0' + (totalSec - ((minutes * 60) + (hours * 3600))).toString();
+    }
+    output = hours + ':' + minutes + ':' + seconds;
   } else if (totalSec > 59) {
-      minutes = Math.floor(totalSec / 60);
-      seconds = totalSec - (minutes * 60);
-      if (minutes.toString().length == 1) {
-          minutes = '0' + (Math.floor(totalSec / 60)).toString();
-      }
-      if (seconds.toString().length == 1) {
-          seconds = '0' + (totalSec - (minutes * 60)).toString();
-      }
-      output = minutes + ':' + seconds;
+    minutes = Math.floor(totalSec / 60);
+    seconds = totalSec - (minutes * 60);
+    if (minutes.toString().length == 1) {
+      minutes = '0' + (Math.floor(totalSec / 60)).toString();
+    }
+    if (seconds.toString().length == 1) {
+      seconds = '0' + (totalSec - (minutes * 60)).toString();
+    }
+    output = minutes + ':' + seconds;
   } else {
-      seconds = totalSec;
-      if (seconds.toString().length == 1) {
-          seconds = '0' + (totalSec).toString();
-      }
-      output = (totalSec < 10 ? '0:00:0' : '0:00:') + totalSec;
+    seconds = totalSec;
+    if (seconds.toString().length == 1) {
+      seconds = '0' + (totalSec).toString();
+    }
+
+    output = (totalSec < 10 ? '00:0' : '00:') + totalSec;
   }
 
-    return output;
+  return output;
 }
