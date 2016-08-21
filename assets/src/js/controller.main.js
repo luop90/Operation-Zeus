@@ -12,4 +12,12 @@ zeus.controller('MainCtrl', ['$scope', '$rootScope', '$route', '$window', '$loca
   $rootScope.$on('$routeChangeSuccess', function () {
     $('.tooltipped').tooltip('remove');
   });
+
+  $scope.hideFrame = function () {
+    Main.hideWindow();
+  };
+
+  $scope.closeFrame = function () {
+    Main.closeWindow();
+  }
 }]);

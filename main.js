@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 
+var Main = {};
 g_currentWindow = '';
 
 app.on('ready', () => {
@@ -38,3 +39,13 @@ function createWindow(filename) {
     g_currentWindow = null;
   });
 }
+
+Main.closeWindow = function () {
+  g_currentWindow.close();
+};
+
+Main.hideWindow = function () {
+  g_currentWindow.minimize();
+};
+
+module.exports = Main;
