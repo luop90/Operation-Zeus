@@ -1,0 +1,10 @@
+.row(style="height: 15px;")
+  .col.s12(style="position: fixed; z-index: 1000; background-color: #222;")
+    .right
+      .btn-group
+        a(ng-click="hideFrame()")
+          button.btn-flat.waves-effect.waves-light
+            i.material-icons remove
+        a(ng-click="closeFrame()")
+          button.btn-flat.waves-effect.waves-light
+            i.material-icons close

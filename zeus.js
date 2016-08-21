@@ -80,6 +80,8 @@ Zeus.loadSavedPodcasts = function(callback) {
   }
 
   for (var podcast = 0; podcast < data.length; podcast++) {
+    data[podcast].loading = false;
+    
     for (var episode = 0; episode < data[podcast].podcasts.length; episode++) {
       data[podcast].podcasts[episode].hash = api.md5(data[podcast].podcasts[episode].guid);
       data[podcast].podcasts[episode].id = episode;

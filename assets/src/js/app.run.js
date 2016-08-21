@@ -31,28 +31,28 @@ function runBlock($window, $rootScope, $location, $interval) {
     });
   });
 
-  $interval(function () {
-    if (!$rootScope.settings.autoUpdate) {
-      return;
-    }
-
-    console.log('Updating podcasts...');
-    for (var i = 0; i < $rootScope.podcasts.length; i++) {
-      $rootScope.podcasts[i].loading = true;
-
-      Zeus.fetchPodcastRSS($rootScope.podcasts[i].rssUrl, false, $rootScope.podcasts[i].id, function (err, podcast, index) {
-        $rootScope.podcasts[index] = podcast;
-        $rootScope.podcasts[index].loading = false;
-        $rootScope.podcasts[index].loading = false;
-
-        console.log($rootScope.podcasts);
-        $scope.$apply();
-      });
-    }
-  }, 1000 * 60 * 15); // Update every 15 minutes
+  // $interval(function () {
+  //   if (!$rootScope.settings.autoUpdate) {
+  //     return;
+  //   }
+  //
+  //   console.log('Updating podcasts...');
+  //   for (var i = 0; i < $rootScope.podcasts.length; i++) {
+  //     $rootScope.podcasts[i].loading = true;
+  //
+  //     Zeus.fetchPodcastRSS($rootScope.podcasts[i].rssUrl, false, $rootScope.podcasts[i].id, function (err, podcast, index) {
+  //       $rootScope.podcasts[index] = podcast;
+  //       $rootScope.podcasts[index].loading = false;
+  //       $rootScope.podcasts[index].loading = false;
+  //
+  //       console.log($rootScope.podcasts);
+  //       $scope.$apply();
+  //     });
+  //   }
+  // }, 1000 * 60 * 15); // Update every 15 minutes
 }
 
-$(document).on('click', 'a[href^="http"]', function (event) {
-  event.preventDefault();
+$(document).on('click', 'a[href^="http"]', function (e) {
+  e.preventDefault();
   shell.openExternal(this.href);
 });
