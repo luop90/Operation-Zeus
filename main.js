@@ -25,7 +25,7 @@ function createWindow(filename) {
   }
 
   g_currentWindow = new BrowserWindow({
-    frame: false,
+    frame: true,
     titleBarStyle: 'hidden',
     width: 800,
     height: 600,
