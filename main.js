@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 
 var Main = {};
-g_currentWindow = '';
+var globalWindow = '';
 
 app.on('ready', () => {
   createWindow('index.html');
@@ -14,17 +14,17 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (g_currentWindow === null) {
+  if (globalWindow === null) {
     createWindow('index.html');
   }
 });
 
 function createWindow(filename) {
-  if (g_currentWindow) {
+  if (globalWindow) {
     throw new Error('A window is already open');
   }
 
-  g_currentWindow = new BrowserWindow({
+  globalWindow = new BrowserWindow({
     frame: true,
     titleBarStyle: 'hidden',
     width: 800,
@@ -34,18 +34,19 @@ function createWindow(filename) {
     autoHideMenuBar: true
   });
 
-  g_currentWindow.loadURL(`file://${__dirname}/html/build/${filename}`);
-  g_currentWindow.on('closed', () => {
-    g_currentWindow = null;
+  globalWindow.setMovable(true);
+  globalWindow.loadURL(`file://${__dirname}/html/build/${filename}`);
+  globalWindow.on('closed', () => {
+    globalWindow = null;
   });
 }
 
 Main.closeWindow = function () {
-  g_currentWindow.close();
+  globalWindow.close();
 };
 
 Main.hideWindow = function () {
-  g_currentWindow.minimize();
+  globalWindow.minimize();
 };
 
 module.exports = Main;
