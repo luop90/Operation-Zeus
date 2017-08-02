@@ -1,5 +1,8 @@
+# DEPRECATED
+This repo has been moved to the [Operation-Zeus](https://github.com/Operation-Zeus) group, so **this repository is no longer updated**. [To download and use this app, go to the active repository](https://github.com/Operation-Zeus/Operation-Zeus-Client)
+
 # Operation Zeus
-## A work-in-progress [Electron](http://electron.atom.io) app
+## An [Electron](http://electron.atom.io) app
 A podcast manager built on Electron
 
 ## Usage
