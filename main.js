@@ -1,7 +1,9 @@
+/* use strict */
+
 const { app, BrowserWindow } = require('electron');
 
-var Main = {};
-var globalWindow = '';
+let Main = {};
+let globalWindow = '';
 
 app.on('ready', () => {
   createWindow('index.html');
